@@ -23,7 +23,7 @@ const couponModel = require("../models/couponModel");
 const BannerModel = require("../models/banner");
 
 
-//const Brand = CategoryModel.brand;
+
 const loginPage = async (req, res, next) => {
   try {
     let adminErr;

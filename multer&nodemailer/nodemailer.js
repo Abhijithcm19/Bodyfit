@@ -1,21 +1,22 @@
+
 const nodemailer = require('nodemailer');
 
 
 const sendVerifyEmail = async (userEmail, otp) => {
 
     const mailTransporter = nodemailer.createTransport({
-        host: 'smtp.gmail.com',
-            port: 465,
-            secure:false,
-            auth: {
-                user: 'abhijithcm19@gmail.com',
-                pass: 'wzzmhvqgolothtff'
-              }
+        host: "smtp.gmail.com",
+        port: 465,
+       
+        auth: {
+            user: 'bodyfitpro19@gmail.com',
+            pass: 'qhoqllfckosshaxr',
+        }
     })
    console.log(userEmail);
    console.log("hoiii");
     const message = {
-        from: "abhijith ",
+        from: "Bodyfit Pro <bodyfitpro19@gmail.com> ",
         to: userEmail,
         subject: "Email Verification OTP",
         text: `Your OTP code is ${otp}. Please enter this code to verify your email address.`,
@@ -34,3 +35,8 @@ const sendVerifyEmail = async (userEmail, otp) => {
 }
 
 module.exports = { sendVerifyEmail };
+
+
+
+
+
