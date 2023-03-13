@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>otp</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="/public/otptemplet/images/icons/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/public/otptemplet/css/main.css">
+<!--===============================================================================================-->
+</head>
+<body>
+	
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<div class="login100-pic js-tilt" data-tilt>
+					<img src="/public/otptemplet/images/img-01.png" alt="IMG">
+				</div>
+
+				<form class="login100-form validate-form" action="/forgotpasswordverify" method="post" >
+					<span class="login100-form-title">
+						OTP Verification
+					</span>
+
+			
+
+					<div class="wrap-input100 validate-input" data-validate = "OTP is required">
+						<input class="input100" type="text" name="otp" placeholder="OTP">
+						<span class="focus-input100"></span>
+						<span class="symbol-input100">
+							<i class="fa fa-lock" aria-hidden="true"></i>
+						</span>
+					</div>
+					
+					<div class="container-login100-form-btn">
+						<button type="submit" class="login100-form-btn" >
+							Submit
+						</button>
+					</div>
+
+				</form>
+
+					<div class="container-login100-form-btn">
+						<form  action="/forgotresendotp" method="post" >
+						<button type="submit" id="resend-button" class="login100-form-btn" >
+							Resend
+						</button>
+					</div>
+				</form>
+		
+			</div>
+		</div>
+	</div>
+	
+	
+
+	<script>
+		 function disable(){
+      const resend_button= document.getElementById("resend-button")
+      resend_button.disabled = true;
+  }
+  disable()
+  setTimeout(function(){
+      const resend_button= document.getElementById("resend-button")
+      resend_button.disabled = false;
+  },15000)
+  let count =15
+  const timerDiv = document.getElementById('resend-button');
+  const timer = setInterval(function() {
+    count--;
+    if(count>0){
+      timerDiv.textContent = 'Resend OTP in '+count+'s';
+    }
+    else{
+      timerDiv.textContent='Resend OTP'
+    }
+  }, 1000);
+  setTimeout(function() {
+    clearInterval(timer);
+  }, 15000);
+	</script>
+<!--===============================================================================================-->	
+	<script src="/public/otptemplet/vendor/jquery/jquery-3.2.1.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/otptemplet/vendor/bootstrap/js/popper.js"></script>
+	<script src="/public/otptemplet/vendor/bootstrap/js/bootstrap.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/otptemplet/vendor/select2/select2.min.js"></script>
+<!--===============================================================================================-->
+	<script src="/public/otptemplet/vendor/tilt/tilt.jquery.min.js"></script>
+	<script >
+		$('.js-tilt').tilt({
+			scale: 1.1
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="/public/otptemplet/js/main.js"></script>
+
+</body>
+</html>

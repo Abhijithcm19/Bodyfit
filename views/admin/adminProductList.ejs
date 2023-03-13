@@ -1,0 +1,80 @@
+<%- include('../admin/layouts/admin-header.ejs') %>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Authors table</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Image</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">productName</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">kg</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">flavor</th>
+              
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Quantity</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Price</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                  <th class="text-secondary opacity-7">Controll</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% products.forEach(function(product) { %>
+                  <tr>
+                    <td><%= index ++%></td>
+                    <td>
+                      <img style="height: 100px; width: 100px;"
+                      src="<%= product.image_url[0].url%>" class="img-sm img-thumbnail">
+                  </td>
+                   
+                    <td><%=product.productname%></td>
+                    
+                    <td><%=product.kg %></td>
+                    <td><%=product.flavor %></td>
+                    <td><%=product.qty %></td>
+                    <td><%=product.price %></td>
+                  
+                      <td >
+                        <% if(product.pBlocked){ %>
+                          <span class="badge rounded-pill alert-danger">Blocked</span>
+                          <% } else { %>
+                              <span class="badge rounded-pill alert-success">Active</span>
+                              <% } %>
+                      </td>
+                
+
+                  <td>
+                    <% if(product.pBlocked==false){ %>
+                                     
+                      <a class=" btn-sm btn-btn-primary" href="/admin/blockProduct/<%= product._id %>">block</a>
+                   
+                   <% } else { %>
+                       
+                       <a href="/admin/unblockProduct/<%= product._id%>" class="btn btn-success">Unblock</a>
+                     
+                       <% } %>
+                    </td>
+                    <td>
+                      <a href="/admin/products-edit?id=<%= product._id %>"> 
+                          <button
+                              class="btn btn-info flex items-center justify-between width=50%  px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                              title="edit">Edit</button>
+                      </a>
+                  </td>
+              </tr>
+              <% }) %>
+
+                   
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,60 @@
+<%- include('../admin/layouts/admin-header.ejs') %>
+
+<style>
+ .card {
+    margin: 25px;
+    
+}
+  </style>
+
+<div class="col-lg-8 grid-margin stretch-card" >
+  <div class="card" >
+    <div class="card-body" >
+      <h4 class="card-title">Edit Coupon</h4>
+      <p class="card-description">
+        Add coupon
+      </p>
+      <% couponData.forEach((coupon)=>{%> 
+<form action="" method="post"class="forms-sample">
+  <div class="form-group">
+    <label for="exampleInputName1">Coupon Name</label>
+    <input type="text"  name="couponName" value="<%= coupon.couponName%>" id=""class="form-control" id="exampleInputName1"  placeholder="Type here" required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail3">Coupon Description</label>
+    <input type="text" name="des"  value="<%= coupon.discount%>" class="form-control" id="exampleInputEmail3" value="<%= coupon.description%>" required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Coupon code</label>
+    <input type="text" name="code"  class="form-control" value="<%= coupon.couponCode %>"id="exampleInputPassword4" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail3">Discount in %</label>
+    <input type="number" name="discount" value="<%= coupon.discount%>" class="form-control" id="exampleInputEmail3"  required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Minimum Purchase Amount</label>
+    <input type="text" name="mini" value="<%= coupon.minimumAmount%>" class="form-control" id="exampleInputPassword4" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Maximum limit</label>
+    <input type="text" name="maxLimit" value="<%= coupon.maximumAmount%>" class="form-control" id="exampleInputPassword4" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Start date</label>
+    <input type="date" name="start"  class="form-control" id="exampleInputPassword4" value="<%= coupon.startDate%>" required>
+  </div>
+    
+    <div class="form-group">
+      <label for="exampleInputPassword4">Expiry date</label>
+      <input type="date" name="end" value="<%= coupon.endDate%>" class="form-control" id="exampleInputPassword4" required>
+    </div>
+    <%})%>
+  <button type="submit" class="btn btn-primary me-2"> Edit coupon</button>
+  <button class="btn btn-light">Cancel</button>
+</form>
+</div>
+</div>
+</div>
+
+

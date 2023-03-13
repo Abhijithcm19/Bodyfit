@@ -1,0 +1,62 @@
+<%- include('../admin/layouts/admin-header.ejs') %>
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Authors table</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Customer Name</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Email</th>
+                  <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                  <th class="text-secondary opacity-7">Controll</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% Users.forEach((user) => { %>
+                  <tr>
+                    <td scope="row"><%= index ++%></td>
+                    <td><%= user.name %></td>
+                    <td><%= user.email %></td>
+                    <td >
+                      <% if(user.isBlocked){ %>
+                        <span class="badge rounded-pill alert-danger">Blocked</span>
+                        <% } else { %>
+                            <span class="badge rounded-pill alert-success">Active</span>
+                            <% } %>
+                    </td>
+                    <td>
+                      <% if(user.isBlocked===false){ %>
+                                     
+                        <a class=" btn-sm btn-btn-primary" href="/admin/blockUser/<%= user._id %>">block</a>
+                     <!-- <span><i class="bi bi-person-fill-slash"></i></span> -->
+                     <% } else { %>
+                         
+                         <a href="/admin/unBlockUser/<%= user._id%>" class="btn btn-success">Unblock</a>
+                         <!-- <span><i class="bi bi-person-fill-check"></i></span> -->
+                         <% } %>
+             </a>
+
+             <!-- <a href="/admin/users/details/<%= user._id %>"
+                 class="flex items-center justify-between w-200px px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red">
+
+                 View details</a> -->
+
+                    </td>
+                  </tr>
+                  <% }) %>
+        
+                
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

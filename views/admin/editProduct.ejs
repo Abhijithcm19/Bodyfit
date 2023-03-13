@@ -1,0 +1,163 @@
+
+<%- include('../admin/layouts/admin-header.ejs') %>
+
+<style>
+ .card {
+    margin: 25px;
+    
+}
+  </style>
+
+<div class="col-lg-8 grid-margin stretch-card" >
+  <div class="card" >
+    <div class="card-body" >
+      <h4 class="card-title">Edit Product</h4>
+      <p class="card-description">
+      Edit Product
+      </p>
+<form action="" method="POST" class="forms-sample">
+  <div class="form-group">
+    <label for="exampleInputName1">Product</label>
+    <input type="text" class="form-control" id="exampleInputName1" name="productname" placeholder="Product"  value="<%= productData.productname %>"
+    required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail3">KG</label>
+    <input type="number" name="kg" class="form-control" value="<%= productData.kg%>"
+    required id="exampleInputEmail3" placeholder="KG">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Flavor</label>
+    <input type="text" name="flavor" class="form-control" value="<%= productData.flavor%>"
+    required id="exampleInputPassword4" placeholder="Flavor">
+  </div>
+  <div class="form-group">
+    <label for="exampleSelectGender">catagory</label>
+      <select class="form-control" name="catagory_id">
+        <option value="" disabled selected>Select</option>
+        <% if (productData.categories){%>
+      <% for (let catagory of catData.categories) {%>
+        <option value="<%= catagory._id %>">
+          <%= catagory.name %>
+        </option>
+             <% } %>
+             <% } %>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="exampleInputPassword4">Quantity</label>
+      <input type="number" name="Quantity" class="form-control" value="<%= productData.qty%>"
+      required id="exampleInputPassword4" placeholder="Quantity">
+    </div>
+
+
+
+
+    <!-- <div class="col-12">
+      <label for="inputImage" class="form-label">Product Image</label>
+     
+        <div class="image-container">
+          <img src="" width="100" height="100">
+          <img src="" width="100" height="100">
+          <img src="" width="100" height="100">
+  
+          <input type="file" class="form-control" id="exampleInputPassword4" name="images" multiple>
+        </div>
+      
+    </div> -->
+    
+
+
+
+
+  <div class="form-group">
+    <label for="exampleInputCity1">Price</label>
+    <input type="number" class="form-control" name="price" id="exampleInputCity1" value="<%= productData.price%>"
+    required placeholder="Price">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputCity1">description</label>
+    <input type="text" class="form-control" name="description" id="exampleInputCity1" value="<%= productData.description%>"
+    required placeholder="Price">
+  </div>
+  
+
+  <button type="submit" class="btn btn-primary me-2">Submit</button>
+  <button class="btn btn-light">Cancel</button>
+</form>
+
+</div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModl">
+  Edit Images</button>
+</div>
+
+</div>
+<div class="modal fade " id="exampleModl" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel"> Product Image</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="recipient-name" name="orderStatus" class="col-form-label"
+            style="font-size: 18px; font-weight: bold; text-decoration: underline;">Image Edits</label>
+        </div>
+
+        <div class="row">
+          <% for(var i=0;i<productData.image_url.length;i+=2) { %>
+          <div class="col-md-6">
+            <form action="/admin/image-edit/<%= productData.image_url[i].public_id %>/<%= productData._id %>" method="POST" enctype="multipart/form-data" class="text-center">
+              <div class="image-container border p-2" style="border-width: 4px;">
+                <img src="<%= productData.image_url[i].url %>" style="width:50%; height:30%; object-fit:contain; display:block; margin:auto;">
+                <input style="width: 50%;
+                margin: auto;" type="file" id="file" name="images" onchange="return fileValidation()" multiple>                    <button class="update-image-btn btn btn-sm btn-success mt-2 mx-auto d-block">Update Image</button>
+              </div>
+            </form>
+          </div>
+          <% if (i+1 < productData.image_url.length) { %>
+          <div class="col-md-6">
+            <form action="/product/image-edit/<%= productData.image_url[i+1].public_id %>/<%= productData._id %>" method="POST" enctype="multipart/form-data" class="text-center">
+              <div class="image-container border p-2" style="border-width: 4px;">
+                <img src="<%= productData.image_url[i+1].url %>" style="width:50%; height:30%; object-fit:contain; display:block; margin:auto;">
+               <input style="width: 50%;
+               margin: auto;" type="file" id="file" name="images" onchange="return fileValidation()" multiple>
+                <button class="update-image-btn btn btn-sm btn-success mt-2 mx-auto d-block">Update Image</button>
+              </div>
+            </form>
+          </div>
+          <% } %>
+          <% } %>
+        </div>
+        
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    </div>
+ </div>
+
+
+ <script>
+  function fileValidations() {
+    var fileInput =
+      document.getElementById('image');
+
+    var filePath = fileInput.value;
+
+    // Allowing file type
+    var allowedExtensions =
+      /(\.jpg|\.jpeg|\.png)$/i;
+
+    if (!allowedExtensions.exec(filePath)) {
+      alert('Invalid file type');
+      fileInput.value = '';
+      return false;
+    }
+  }
+</script>
+

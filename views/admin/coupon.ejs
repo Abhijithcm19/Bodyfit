@@ -1,0 +1,171 @@
+<%- include('../admin/layouts/admin-header.ejs') %>
+
+<style>
+ .card {
+    margin: 25px;
+    
+}
+  </style>
+
+<div class="col-lg-8 grid-margin stretch-card" >
+  <div class="card" >
+    <div class="card-body" >
+      <h4 class="card-title">Coupon Management</h4>
+      <p class="card-description">
+        Add coupon
+      </p>
+<form action="/admin/addCoupon" method="POST"class="forms-sample">
+  <div class="form-group">
+    <label for="exampleInputName1">Coupon Name</label>
+    <input type="text"  name="couponName" id=""class="form-control" id="exampleInputName1" placeholder="Type here" required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail3">Coupon Description</label>
+    <input type="text" name="des"  class="form-control" id="exampleInputEmail3"  required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Coupon code</label>
+    <input type="text" name="code"  class="form-control" id="exampleInputPassword4" >
+  </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail3">Discount</label>
+    <input type="number" name="discount" class="form-control" id="exampleInputEmail3"  required>
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Minimum Purchase Amount</label>
+    <input type="text" name="mini"  class="form-control" id="exampleInputPassword4" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Maximum limit</label>
+    <input type="text" name="maxLimit" class="form-control" id="exampleInputPassword4" >
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword4">Start date</label>
+    <input type="date" name="start"  class="form-control" id="exampleInputPassword4" required>
+  </div>
+    
+    
+    <div class="form-group">
+      <label for="exampleInputPassword4">Expiry date</label>
+      <input type="date" name="end" class="form-control" id="exampleInputPassword4" required>
+    </div>
+
+  <button type="submit" class="btn btn-primary me-2"> Add coupon</button>
+  <button class="btn btn-light">Cancel</button>
+</form>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Coupon table</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Coupon Name</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Coupon Description</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Coupon code</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Discount</th> 
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Minimum Purchase Amount</th> 
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Maximum limit</th> 
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+               
+    
+
+            <%couponData.forEach(function(element,index){ %> 
+
+                  <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                          <div class="flex items-center text-sm">
+                              <div>
+                                <%= index + 1%>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%=element.couponName %>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%=element.description %>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%=element.couponCode %>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%=element.discount %>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%=element.minimumAmount %>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%=element.maximumAmount %>
+                      </td>
+                  
+                      
+                      <td class="px-4 py-3 text-xs">
+                        
+                        <a class="btn btn-success btn-sm" href="/admin/coupon/editcoupon?id=<%= element._id%>"
+                          role="button">Edit</a>
+
+<!-- Button trigger modal -->
+<a class="btn btn-danger btn-sm" href="/admin/coupon-delete?id=<%= element._id%>" data-toggle="modal" data-target="#deleteModal">
+  Delete
+</a>
+
+<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirm deletion</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this coupon?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger" href="/admin/coupon-delete?id=<%= element._id%>" role="button">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+                            
+                    </td>
+             
+
+                </tr>
+                <% }) %>
+          
+              </tbody>
+                
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>

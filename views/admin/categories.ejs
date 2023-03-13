@@ -1,0 +1,108 @@
+<%- include('../admin/layouts/admin-header.ejs') %>
+
+ <style>
+  .card {
+     margin: 20px;
+     
+ }
+   </style>
+
+<div class="col-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">category</h4>
+      <p class="card-description">
+        Use the <code>.form-inline</code> class to display a series of labels, form controls, and buttons on a single horizontal row
+      </p>
+     <p style="color: red;"><%=errorData%></p>
+      <form action="/admin/add-categories" method="POST" class="form-inline"  >
+   
+        <div class="input-group mb-2 mr-sm-2">
+          <input type="text" name="catname" id=""
+          class="form-control block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+          placeholder="Type here"  required />  
+        
+        </div>
+        
+        </div>
+        <button type="submit" class="btn btn-primary mb-2">Add</button>
+      </form>
+    </div>
+  </div>
+</div> 
+
+
+
+
+
+
+
+<div class="container-fluid py-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mb-4">
+        <div class="card-header pb-0">
+          <h6>Cat table</h6>
+        </div>
+        <div class="card-body px-0 pt-0 pb-2">
+          <div class="table-responsive p-0">
+            <table class="table align-items-center mb-0">
+              <thead>
+                <tr>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Coupon Name</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                  <% categorydetails.forEach(function(categ,index){ %>
+
+
+
+                  <tr class="text-gray-700 dark:text-gray-400">
+                      <td class="px-4 py-3">
+                          <div class="flex items-center text-sm">
+                              <div>
+                                  <%=  index + 1 %>
+                              </div>
+                          </div>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                          <%= categ.name %>
+                      </td>
+                      <td class="px-4 py-3 text-xs">
+                        <% if(categ.iBlocked){ %>
+                            <span class="badge rounded-pill alert-danger">Blocked</span>
+                            <% } else { %>
+                                <span class="badge rounded-pill alert-success">Active</span>
+                                <% } %>
+                    </td>
+                    <td>
+                       
+                            <% if(categ.iBlocked===false){ %>
+                                 
+                                   <a class=" btn-sm btn-btn-primary" href="/admin/blockCategory/<%= categ._id %>">block</a>
+                                
+                                <% } else { %>
+                                    
+                                    <a href="/admin/unblockCategory/<%= categ._id%>" class="btn btn-success">Unblock</a>
+                                   
+                                    <% } %>
+                        </a>
+
+                
+                    </td>
+                </tr>
+                <% }) %>
+          
+              </tbody>
+                
+              
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
