@@ -995,7 +995,6 @@ const dashBoardDataGet = async (req, res) => {
   const orderChart = await orderModel.aggregate(pipeLine)
 
   res.json({
-
     userChart,
     product,
     orderChart

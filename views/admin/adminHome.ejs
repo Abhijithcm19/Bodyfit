@@ -1,3 +1,5 @@
+
+
 <%- include('../admin/layouts/admin-header.ejs') %>
 
 
@@ -111,22 +113,22 @@
           <h6 class="text-capitalize">Sales overview</h6>
           <p class="text-sm mb-0">
             <i class="fa fa-arrow-up text-success"></i>
-            <span class="font-weight-bold">4% more</span> in 2021
+            <span class="font-weight-bold"></span>
           </p>
         </div>
         <div class="card-body p-3">
           <div class="chart">
-            <canvas id="barChart" class="chart-canvas" height="180"></canvas>
-          
+            <canvas id="barChart" class="chart-canvas" height="170"></canvas>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.2.1/chart.min.js" integrity="sha512-v3ygConQmvH0QehvQa6gSvTE2VdBZ6wkLOlmK7Mcy2mZ0ZF9saNbbk19QeaoTHdWIEiTlWmrwAL4hS8ElnGFbA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>F
             <script>
-           
               document.addEventListener("DOMContentLoaded", () => {
                 fetch('/admin/get-month-wise-data').then((res) => res.json()).then((chartData) => {
-                  console.log(chartData);
+                  console.log(chartData);2
                   const ordersKeys = Object.keys(chartData.orderChart[0].data)
                   const ordersData = ordersKeys.map((key, index) => chartData.orderChart[0].data[key])
                   const usersKeys = Object.keys(chartData.userChart[0].data)
                   const usersData = usersKeys.map((key, index) => chartData.userChart[0].data[key])
+               
                   const productKeys = Object.keys(chartData.product[0].data)
                   const productData = productKeys.map((key, index) => chartData.product[0].data[key])
                   new Chart(document.querySelector('#barChart'), {
@@ -143,8 +145,7 @@
                           borderWidth: 2
                         }, {
                           label: 'Total Product',
-                          data: productData,
-                          
+                          data: productData,       
                           borderWidth: 2
                         }]
                       },
@@ -173,7 +174,6 @@
               document.addEventListener("DOMContentLoaded", () => {
                 fetch('/admin/get-order-status').then((res) => res.json()).then((orderData) => {
                   console.log(orderData);
-
                 echarts.init(document.querySelector("#trafficChart")).setOption({
                   tooltip: {
                     trigger: 'item'
@@ -210,7 +210,6 @@
                       name: 'Delivered Items'
                     },
                     {
-
                     
                       value: orderData?.pending,
                       name: 'Pending Items'
@@ -270,13 +269,18 @@
 
 <!--   Core JS Files   -->
 
+<script src="/public/assets/chartjsfile/apexcharts/apexcharts.min.js"></script>
+<script src="/public/assets/chartjsfile/chart.js/chart.umd.js"></script>
+<script src="/public/assets/chartjsfile/echarts/echarts.min.js"></script>
+<!--   Core JS Files   -->
+
 <script>
   var ctx = document.getElementById('myChartdon').getContext('2d');
   
   var chart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-      labels: ['A', 'B', 'C', 'D', 'E'],
+      labels: ['Shipped Items', 'Delivered Items', 'Pending Items', 'Out of Delivery', ],
       datasets: [{
         label: 'My Data',
         data: [25, 30, 45, 60, 20],
@@ -285,14 +289,14 @@
           'rgba(54, 162, 235, 0.2)',
           'rgba(255, 206, 86, 0.2)',
           'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)'
+        
         ],
         borderColor: [
           'rgba(255, 99, 132, 1)',
           'rgba(54, 162, 235, 1)',
           'rgba(255, 206, 86, 1)',
           'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)'
+          
         ],
         borderWidth: 1
       }]
@@ -301,7 +305,7 @@
       plugins: {
         title: {
           display: true,
-          text: 'My Doughnut Chart'
+          text: 'Order Chart'
         },
         legend: {
           display: true
@@ -313,50 +317,8 @@
 
 
 
-<script>
-  var ctx = document.getElementById('myChart').getContext('2d');
-  var chart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: ['2022-01-01', '2022-01-02', '2022-01-03', '2022-01-04', '2022-01-05'],
-      datasets: [{
-        label: 'My Data',
-        data: [25, 30, 45, 60, 20],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)'
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)'
-        ],
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      },
-      plugins: {
-        title: {
-          display: true,
-          text: 'My Chart with Dates'
-        },
-        legend: {
-          display: true
-        }
-      }
-    }
-  });
-</script>
+
+
 
 
 
@@ -378,4 +340,4 @@
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="/public/projectAdmin/assets
+  

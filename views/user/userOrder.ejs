@@ -148,12 +148,22 @@
                             <p class="text-muted mt-1 mb-0 small ms-xl-5" style="font-weight: 700; "><%= item.orderStatus %></p>
                             <div>
                                
-                                Status: <%= item.status %>
-                             
-                                  <form action="/cancel-order" method="POST">
-                                    <input type="hidden" name="orderId" value="<%= item._id %>">
-                                    <button type="submit">Cancel Order</button>
-                                  </form>
+                              <style>
+                                .status {
+                                  font-size: 12px;
+                                }
+                              
+                                button[type="submit"] {
+                                  font-size: 12px;
+                                }
+                              </style>
+                              
+                              Status: <span class="status"><%= item.status %></span>
+                              
+                              <form action="/cancel-order" method="POST">
+                                <input type="hidden" name="orderId" value="<%= item._id %>">
+                                <button type="submit">Cancel Order</button>
+                              </form>
                              
                               </div>
                               

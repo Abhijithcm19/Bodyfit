@@ -60,7 +60,7 @@ const productSchema =new Schema({
 
 
 
-});
+},{timestamps:true});
 
 const product = mongoose.model('products',productSchema)
 module.exports = product;
