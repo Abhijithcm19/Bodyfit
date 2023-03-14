@@ -3,7 +3,7 @@ const bannerSchema = new mongoose.Schema(
     {
      offerType: {
         type:String,
-        required:true,
+       
      },
      bannerText:{
         type:String,
@@ -11,7 +11,7 @@ const bannerSchema = new mongoose.Schema(
      },
      couponName:{
       type:String,
-      required:true
+    
   },
      bannerImage:{
         type:String,

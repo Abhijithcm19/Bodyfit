@@ -17,6 +17,7 @@ const path = require("path");
 const nodemailer = require('nodemailer');
 const Wishlist = require("../models/wishlist");
 const couponModel = require("../models/couponModel");
+const BannerModel =require("../models/banner")
 const Category = CategoryModel.category;
 
 
@@ -171,8 +172,9 @@ postSetPassword = async (req, res, next) => {
 
 const home = async (req, res, next) => {
   try {
-    const newproduct = await ProductModel.find({});
-    res.render("../views/user/userHome", {title: "Home", login: req.session.userLogin, newproduct });
+    let bannerData = await BannerModel.find({ banDeleted:false})
+    const newproduct = await ProductModel.find({}).limit(4);
+    res.render("../views/user/userHome", {title: "Home", login: req.session.userLogin, newproduct,bannerData });
     
   } catch (error) {
     next(error);

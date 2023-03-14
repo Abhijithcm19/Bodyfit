@@ -203,7 +203,7 @@ const addProduct = async (req, res, next) => {
 
 
     const newProduct = ProductModel({
-      category: req.body.category_id,
+      category: mongoose.Types.ObjectId(req.body.category_id),
       productname: req.body.productname,
       description: req.body.description,
       price: req.body.price,
@@ -213,6 +213,7 @@ const addProduct = async (req, res, next) => {
       image_url: images,
 
     });
+
     console.log(req.body);
     const Product = new ProductModel(newProduct);
     await Product.save()
