@@ -141,13 +141,14 @@ postSetPassword = async (req, res, next) => {
   try {
 
     const email = req.body.email
-    const password = req.body.password
+    const password = req.body.newpassword
+    console.log(password+"kkkkkkllllllllllkkiiiiiiiiiiiiiiiiiiiik");
     const hash = await bcrypt.hash(password, 10)
 
- 
+
     await UserModel.findOneAndUpdate(
       { email: email },
-      { $set: { password: hash } })
+      { $set: { newpassword: hash } })
       
       console.log("Enter Renter Page");
     res.render('/user/login')
@@ -575,15 +576,16 @@ const getallproductpage = async (req, res) => {
     const categoryData = await CategoryModel.find({ iBlocked: true }, { name: 1 });
     const filter = {};
     const category = req.query.category;
+    
     const searchKeyword = req.query.search || '';
     
     if (category) {
       filter.category = category;
     }
     if (searchKeyword) {
-      filter.name = { $regex: new RegExp(searchKeyword, 'i') };
+      filter.productname = { $regex: new RegExp(searchKeyword, 'i') };
     }
-
+ 
     let sort = {};
     switch (sortOption) {
       case 'low-to-high':
@@ -598,9 +600,11 @@ const getallproductpage = async (req, res) => {
       case 'name-descending':
         sort = { productname: -1 };
         break;
+       
       default:
         sort = { created_at: -1 };
         break;
+    
     }
 
     const countQuery = category ? { ...filter, category } : filter;
@@ -1120,7 +1124,7 @@ const getUserOrderPage = async (req, res, next) => {
       {
          $unwind: "$product",
        },
-    ]);
+    ]).sort({createdAt: -1});
     res.render("../views/user/userOrder.ejs", {
       login: req.session,
       userDatas: userData,orderList, 

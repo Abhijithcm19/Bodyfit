@@ -157,7 +157,7 @@ const postCategoriesPage = (req, res) => {
 const productsPage = async (req, res, next) => {
   try {
     const Categories = await CategoryModel.find();
-    const products = await ProductModel.find();
+    const products = await ProductModel.find().sort({createdAt: -1});
     let index = 1;
     res.render("../views/admin/adminProductList", {
       title: "Products",
@@ -171,6 +171,8 @@ const productsPage = async (req, res, next) => {
 };
 
 const addProductPage = (req, res) =>
+
+
   CategoryModel.find()
     .then((categories) => {
       const catData = { edit: false, categories, name: "add product" };
@@ -181,8 +183,12 @@ const addProductPage = (req, res) =>
       console.log(error);
     });
 
+
+
 const addProduct = async (req, res, next) => {
+
   try { let images = [];
+
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
         const file = dUri.format(
@@ -200,10 +206,7 @@ const addProduct = async (req, res, next) => {
     }
 
 
-
-
     const newProduct = ProductModel({
-      category: mongoose.Types.ObjectId(req.body.category_id),
       productname: req.body.productname,
       description: req.body.description,
       price: req.body.price,
@@ -211,6 +214,7 @@ const addProduct = async (req, res, next) => {
       flavor: req.body.flavor,
       qty: req.body.Quantity,
       image_url: images,
+      category:req.body.catagory_id
 
     });
 
@@ -223,6 +227,9 @@ const addProduct = async (req, res, next) => {
     console.error(error);
   }
 };
+
+
+
 
 const doLogin = async (req, res, next) => {
   try {
@@ -772,7 +779,7 @@ try {
         },
       },
     
-   ]);
+   ]).sort({createdAt: -1});
    console.log("orderList start")
 
 console.log(orderList)

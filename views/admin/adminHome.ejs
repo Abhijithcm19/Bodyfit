@@ -138,14 +138,20 @@
                         datasets: [{
                           label: 'Orders',
                           data: ordersData,
+                          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                  borderColor: 'rgba(255, 99, 132, 1)',
                           borderWidth: 2
                         }, {
                           label: 'Users',
                           data: usersData,
+                          backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                  borderColor: 'rgba(54, 162, 235, 1)',
                           borderWidth: 2
                         }, {
                           label: 'Total Product',
-                          data: productData,       
+                          data: productData,
+                          backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                                  borderColor: 'rgba(255, 206, 86, 1)',       
                           borderWidth: 2
                         }]
                       },
@@ -169,59 +175,45 @@
       <div class="card card-carousel overflow-hidden h-100 p-0">
         <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
           <div class="carousel-inner border-radius-lg h-100">
-            <canvas id="myChartdon"></canvas>
+            <canvas id="trafficChart"></canvas>
             <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                fetch('/admin/get-order-status').then((res) => res.json()).then((orderData) => {
-                  console.log(orderData);
-                echarts.init(document.querySelector("#trafficChart")).setOption({
-                  tooltip: {
-                    trigger: 'item'
-                  },
-                  legend: {
-                    top: '5%',
-                    left: 'center'
-                  },
-                  series: [{
-                    name: 'Orders',
-                    type: 'pie',
-                    radius: ['40%', '70%'],
-                    avoidLabelOverlap: false,
-                    label: {
-                      show: false,
-                      position: 'center'
-                    },
-                    emphasis: {
-                      label: {
-                        show: true,
-                        fontSize: '18',
-                        fontWeight: 'bold'
-                      }
-                    },
-                    labelLine: {
-                      show: false
-                    },
-                    data: [{
-                      value: orderData?.ship, 
-                      name: 'Shipped Items'
-                    },
-                    {
-                      value:orderData?.delivered,
-                      name: 'Delivered Items'
-                    },
-                    {
-                    
-                      value: orderData?.pending,
-                      name: 'Pending Items'
-                    },
-                    {
-                      value: orderData?.outdelivery,
-                      name: 'Out of Delivery'
-                    }
-                    ]
-                  }]
-                });})
-              });
+             document.addEventListener("DOMContentLoaded", () => {
+  fetch('/admin/get-order-status')
+    .then((res) => res.json())
+    .then((orderData) => {
+      console.log(orderData);
+      var ctx = document.getElementById("trafficChart");
+      var myPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ["Shipped Items", "Delivered Items", "Pending Items", "Out of Delivery"],
+          datasets: [{
+            data: [orderData?.ship, orderData?.delivered, orderData?.pending, orderData?.outdelivery],
+            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e'],
+            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+          }],
+        },
+        options: {
+          maintainAspectRatio: false,
+          tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            caretPadding: 10,
+          },
+          legend: {
+            display: false
+          },
+          cutoutPercentage: 80,
+        }
+      });
+    });
+});
             </script>
               <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
            

@@ -47,56 +47,22 @@ const viewCartPage = async (req, res, next) => {
   res.render("../views/user/cart.ejs", {
     cartList: cartList,
     userId: req.session.username,
+    
   });
 };
 
-  
-// const viewCartPage = async (req, res, next) => {
-//     const email = req.session.userEmail;
-//     const user = await UserModel.findOne({ email: email });
-//     console.log(user);
-  
-//     const userId = user._id;
-//     console.log(user._id);
-  
-//     const cartList = await carts.aggregate([
-//       {
-//         $match: {
-//           userId: new mongoose.Types.ObjectId(userId),
-//         },
-//       },
-//       {
-//         $unwind: "$cartItems",
-//       },
-//       {
-//         $lookup: {
-//           from: "products",
-//           localField: "cartItems.productId",
-//           foreignField: "_id",
-//           as: "product",
-//         },
-//       },
-//       {
-//         $unwind: "$product",
-//       },
-//     ]);
-  
-//     console.log("cartList23423: ", cartList);
-  
-//     res.render("../views/user/cart.ejs", {
-//       cartList: cartList,
-//       userId: req.session.username,
-//     });
-//   };
-  
+
+
+
 
 const getshopdetails = async (req, res) => {
+
     const id = req.params.id;
     try {
       const products = await ProductModel.findOne({ _id: id });
   
   
-      res.render("../views/user/Productdetails.ejs", { product: products });
+      res.render("../views/user/Productdetails.ejs", { product: products, ses:req.session.userEmail,ses:req.session.username });
     } catch (error) {
       console.log(error.message);
     }
@@ -104,18 +70,7 @@ const getshopdetails = async (req, res) => {
   
 
 
-// const getshopdetails = async (req, res,next) => {
 
-//   try {
-//     ProductModel.findById({ _id: req.params?.ProductModel_id  }).then((ProductModel) => {
-//       res.render("../views/user/Productdetails.ejs", {
-//         product: ProductModel,
-//       });
-//     });
-   
-//   } catch (error) {
-// next(error)  }
-// };
 
 const addToCart = async (req, res) => {
     try {
@@ -213,6 +168,7 @@ const addToCart = async (req, res) => {
 
 
 
+  
 
 
 module.exports = {

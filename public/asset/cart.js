@@ -33,7 +33,7 @@
   
 function incrementCount(userId, productId, price, maxQuantity) {
   const baseUrl = window.location.origin;
-  let quantity = document.querySelector("#Quantity" + productId);
+  let quantity = document.querySelector("#qty" + productId);
   let total = document.querySelector("#total-price" + productId);
   let sub_total = document.querySelector("#total-amount1");
   let total_amount = document.querySelector("#total-amount2");
@@ -76,7 +76,7 @@ Swal.fire({
   
   
   function decrementCount(userId, productId, price) {
-    let quantity = document.querySelector("#Quantity" + productId);
+    let quantity = document.querySelector("#qty" + productId);
     let total = document.querySelector("#total-price" + productId);
 
     let sub_total = document.querySelector("#total-amount1");
