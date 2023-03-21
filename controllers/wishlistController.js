@@ -58,7 +58,6 @@ const displayWishlist = async (req, res, next) => {
 };
 
 
-
 const addToWishlist = async (req, res) => {
   try {
     const email = req.session.userEmail;
@@ -72,12 +71,21 @@ const addToWishlist = async (req, res) => {
         await Wishlist.insertMany([{ userId: userId }]);
       }
 
-      await Wishlist.updateOne(
-        { userId: userId },
-        {
-          $push: { wishlistItems: { productId: req.query.productid } },
-        }
-      );
+      // Check if the product is already in the wishlist
+      const productExists = await Wishlist.exists({
+        userId: userId,
+        "wishlistItems.productId": req.query.productid,
+      });
+
+      // If the product is not in the wishlist, add it
+      if (!productExists) {
+        await Wishlist.updateOne(
+          { userId: userId },
+          {
+            $push: { wishlistItems: { productId: req.query.productid } },
+          }
+        );
+      }
 
       res.redirect("/wishlist");
     }
@@ -85,6 +93,36 @@ const addToWishlist = async (req, res) => {
     console.log(err);
   }
 };
+
+
+
+
+// const addToWishlist = async (req, res) => {
+//   try {
+//     const email = req.session.userEmail;
+//     const user = await UserModel.findOne({ email: email });
+//     const userId = user._id;
+
+//     if (req.query?.productid && req.session.username) {
+//       const wishlist = await Wishlist.findOne({ userId: userId });
+
+//       if (!wishlist) {
+//         await Wishlist.insertMany([{ userId: userId }]);
+//       }
+
+//       await Wishlist.updateOne(
+//         { userId: userId },
+//         {
+//           $push: { wishlistItems: { productId: req.query.productid } },
+//         }
+//       );
+
+//       res.redirect("/wishlist");
+//     }
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 
 

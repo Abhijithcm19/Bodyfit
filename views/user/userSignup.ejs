@@ -63,15 +63,16 @@
                 <p><%=invalid%></p>
                 <%}%> -->
 
-                <form action="/register" method="post"  id="form" class="signin-form">
+                <form action="/register" method="post" id="signup_form" class="signin-form">
+                  <p class="mx-5" style="color:red ;"><%=error%></p>
                   <div class="form-group mb-3">
                     <label class="label" for="name">User Name</label>
                     <input
                       type="text"
                       class="form-control"
                       name="name"
-                      placeholder="User Name"
                       id="name"
+                      placeholder="User Name"
                       required
                     />
                     <small id="nameError" class="text-danger err"></small>
@@ -80,9 +81,9 @@
                     <label class="label" for="name">Email</label>
                     <input
                       type="email"
-                      id="email"
                       class="form-control"
-                      name="email"
+                      name="email" 
+                      id="email"
                       placeholder="Email"
                       required
                     />
@@ -93,21 +94,19 @@
                     <input
                       type="number"
                       class="form-control"
-                      id="phone"
                       name="mobile"
+                      id="phone"
                       placeholder="Phone Number"
                       required
-                      
                     />
                     <small id="phoneError" class="text-danger err"></small>
-
                   </div>
                   <div class="form-group mb-3">
                     <label class="label" for="password">Password</label>
                     <input
                       type="password"
                       class="form-control"
-                      name="password"
+                      name="password" 
                       id="password"
                       placeholder="Password"
                       required
@@ -122,12 +121,7 @@
                       Signup
                     </button>
                   </div>
-                  <div class="form-group d-md-flex">
-                    
-                    <div class="w-50 text-md-right">
-                      <a href="#">Forgot Password</a>
-                    </div>
-                  </div>
+              
                 </form>
                 <p class="text-center">
                   If you already have an account?<a href="/login">Login</a>
@@ -138,11 +132,8 @@
         </div>
       </div>
     </section>
-
-
-
     <script>
-      const form = document.getElementById('form');
+      const form = document.getElementById('signup_form');
       const nam = document.getElementById('name');
       const phone = document.getElementById('phone');
       const email = document.getElementById('email');
@@ -229,8 +220,7 @@
       
       
       </script>
-
-
+      
     <script src="/public/userlogin/js/jquery.min.js"></script>
     <script src="/public/userlogin/js/popper.js"></script>
     <script src="/public/userlogin/js/bootstrap.min.js"></script>

@@ -29,14 +29,14 @@
 				<div class="login100-pic js-tilt" data-tilt>
 					<img src="/public/otptemplet/images/img-01.png" alt="IMG">
 				</div>
-
+		
 				<form class="login100-form validate-form" action="/forgotpasswordverify" method="post" >
+					<p style="color:red ;"><%= locals.errorData%></p>
 					<span class="login100-form-title">
 						OTP Verification
 					</span>
-
+				
 			
-
 					<div class="wrap-input100 validate-input" data-validate = "OTP is required">
 						<input class="input100" type="text" name="otp" placeholder="OTP">
 						<span class="focus-input100"></span>

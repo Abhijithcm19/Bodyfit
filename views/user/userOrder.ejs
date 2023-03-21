@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="/public/bodyfitHome/img/logo.png" alt=""></a>
+                        <a href="/"><img src="/public/bodyfitHome/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
@@ -111,7 +111,7 @@
                 <div class="card-body p-4">
                   <div class="d-flex justify-content-between align-items-center mb-4">
                     <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
-                    <p class="small text-muted mb-0">Receipt Voucher : 1KAU9-84UIL</p>
+                   
                   </div>
                   <% orderList.forEach((item,index)=>{%>
                   <div class="card shadow-0 border mb-4">
@@ -146,26 +146,7 @@
                        
                           <div class="d-flex justify-content-around mb-1">
                             <p class="text-muted mt-1 mb-0 small ms-xl-5" style="font-weight: 700; "><%= item.orderStatus %></p>
-                            <div>
-                               
-                              <style>
-                                .status {
-                                  font-size: 12px;
-                                }
-                              
-                                button[type="submit"] {
-                                  font-size: 12px;
-                                }
-                              </style>
-                              
-                              Status: <span class="status"><%= item.status %></span>
-                              
-                              <form action="/cancel-order" method="POST">
-                                <input type="hidden" name="orderId" value="<%= item._id %>">
-                                <button type="submit">Cancel Order</button>
-                              </form>
-                             
-                              </div>
+                          
                               
                           </div>
                        
@@ -190,71 +171,72 @@
 
 
 
-      <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="#"><img src="/public/bodyfitHome/img/footer-logo.png" alt=""></a>
-                        </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="/public/bodyfitHome/img/payment.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Clothing Store</a></li>
-                            <li><a href="#">Trending Shoes</a></li>
-                            <li><a href="#">Accessories</a></li>
-                            <li><a href="#">Sale</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Shopping</h6>
-                        <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-3 offset-lg-1 col-md-6 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>NewLetter</h6>
-                        <div class="footer__newslatter">
-                            <p>Be the first to know about new arrivals, look books, sales & promos!</p>
-                            <form action="#">
-                                <input type="text" placeholder="Your email">
-                                <button type="submit"><span class="icon_mail_alt"></span></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                        </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+<!-- Footer Section Begin -->
+<footer class="footer">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-3 col-md-6 col-sm-6">
+              <div class="footer__about">
+                  <div class="footer__logo">
+                      <a href="#"><h3 style="color: white;">BODYFIT</h3></a>
+                  </div>
+                  <p>The customer is at the heart of our unique business model, which includes design.</p>
+                  <a href="#"><img src="/public/bodyfitHome/img/payment.png" alt=""></a>
+              </div>
+          </div>
+          <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+              <div class="footer__widget">
+                  <h6>MENU</h6>
+                  <ul>
+                      <li><a href="#">Home</a></li>
+                      <li><a href="#">Catalog</a></li>
+                      <li><a href="#">Contact Us</a></li>
+                      <li><a href="#">Profile</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
+              <div class="footer__widget">
+                  <h6>HELP                        </h6>
+                  <ul>
+                      <li><a href="#">Contact Us</a></li>
+                      <li><a href="#">Payment Methods</a></li>
+                      <li><a href="#">Delivary</a></li>
+                      <li><a href="#">Return & Exchanges</a></li>
+                  </ul>
+              </div>
+          </div>
+          <div class="col-lg-2 col-md-3 col-sm-6">
+              <div class="footer__widget">
+                  <h6>Contact Us                      </h6>
+                  <ul>
+                      <li><a href="#">	HiLight business Park , calicut ,kerala</a></li>
+                      <li><a href="#">	6238424753</a></li>
+                      <li><a href="#">	shoehub2023@gmail.com</a></li>
+                     
+                  </ul>
+              </div>
+          </div>
+       
+      </div>
+      <div class="row">
+          <div class="col-lg-12 text-center">
+              <div class="footer__copyright__text">
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                  <p>Copyright ©
+                      <script>
+                          document.write(new Date().getFullYear());
+                      </script>2020
+                      All rights reserved | This template is made with <i class="fa fa-heart-o"
+                      aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Abhijith</a>
+                  </p>
+                  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+              </div>
+          </div>
+      </div>
+  </div>
+</footer>
+<!-- Footer Section End -->
 
     <!-- Search Begin -->
     <div class="search-model">

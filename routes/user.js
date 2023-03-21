@@ -9,7 +9,7 @@ const cartcontroller = require("../controllers/cartController");
 
 const wishlistcontroller = require("../controllers/wishlistController");
 
-const ordercontroller = require("../controllers/orderController");
+
 
 const salesReport =require("../multer&nodemailer/export")
 
@@ -28,7 +28,7 @@ router.get("/forgotpass", controller.getforgotpassmail);
 
 router.post("/emailpost", controller.emailPost);
 
-router.get("/onlyotp", controller.getOnlyOtp);
+router.get("/onlyotp/", controller.getOnlyOtp);
 
 router.post("/forgotpasswordverify", controller.forgotpasswordverifyotp);
 
@@ -113,7 +113,7 @@ router.post("/abc",userLogin,wishlistcontroller.addToWishlist);
 
 
 
-router.get("/removeWishlist", wishlistcontroller.removeWishlist);
+router.get("/removeWishlist", wishlistcontroller.removeWishlist);      
 
 
 router.get("/success-page",controller.codSuccessPage)

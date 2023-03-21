@@ -26,11 +26,15 @@ passErr = "";
 
 const signupPage = async (req, res, next) => {
   try {
+    let error = req.session.error;
+    let succ = req.session.succ;
+    req.session.error = null;
+    req.session.succ = null ;
     const session = req.session.user;
     if (session) {
       res.redirect("/");
     } else {
-      res.render("../views/user/userSignup");
+      res.render("../views/user/userSignup", {error,succ ,login: req.session});
     }
   } catch (error) {
     next(error);
@@ -71,12 +75,30 @@ const loginPage = async (req, res, next) => {
   }
 };
 
+
+const home = async (req, res, next) => {
+  try {
+
+    let bannerData = await BannerModel.find({ banDeleted:false})
+    const newproduct = await ProductModel.find({}).limit(4);
+    res.render("../views/user/userHome", {title: "Home", login: req.session.userLogin, newproduct,bannerData });
+    
+  } catch (error) {
+    next(error);
+    console.log(error.message);
+  }
+};
+
+
 const getforgotpassmail = (req, res) => {
   email = req.query
   res.render('../views/user/forgotemail', { email })
 };
 
-const getOnlyOtp = (req, res) => {
+const getOnlyOtp = (req, res) => 
+{
+  const otpError = req.session.otpError;
+  req.session.otpError=null;
   email = req.query
   res.render('../views/user/forgotpassotp', { email })
 };
@@ -96,6 +118,8 @@ const emailPost = async (req, res, next) => {
 
   let email = req.body.email;
   const userEmail = req.body.email;
+  req.session.forgotpasswordmail=userEmail;
+  
   const userData = req.body;
   const isUserExist = await UserModel.findOne({ email: userEmail });
 
@@ -127,6 +151,7 @@ const forgotpasswordverifyotp = async (req, res, next) => {
         })
 
     } else {
+      req.session.otpError = "Invalid OTP. Please try again.";
       return res.redirect('/onlyotp')
     }
   } catch (error) {
@@ -140,18 +165,22 @@ postSetPassword = async (req, res, next) => {
 
   try {
 
-    const email = req.body.email
-    const password = req.body.newpassword
-    console.log(password+"kkkkkkllllllllllkkiiiiiiiiiiiiiiiiiiiik");
+    const email = req.session.forgotpasswordmail
+
+   req.session.forgotpasswordmail=null
+    const password = req.body.new
+   
+    console.log(email);
+
     const hash = await bcrypt.hash(password, 10)
 
 
     await UserModel.findOneAndUpdate(
       { email: email },
-      { $set: { newpassword: hash } })
+      { $set: { password: hash } })
       
       console.log("Enter Renter Page");
-    res.render('/user/login')
+    res.render('../views/user/userLogin')
 
   } catch (error) {
     next(error);
@@ -160,28 +189,9 @@ postSetPassword = async (req, res, next) => {
 };
 
 
-// const home = async (req, res, next) => {
-//   try {
-//     return res.render("../views/user/userHome", {
-//       title: "Home",
-//       login: req.session.userLogin,
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
-const home = async (req, res, next) => {
-  try {
-    let bannerData = await BannerModel.find({ banDeleted:false})
-    const newproduct = await ProductModel.find({}).limit(4);
-    res.render("../views/user/userHome", {title: "Home", login: req.session.userLogin, newproduct,bannerData });
-    
-  } catch (error) {
-    next(error);
-    console.log(error.message);
-  }
-};
+
+
 
 const doLogout = async (req, res, next) => {
   try {
@@ -251,20 +261,22 @@ const verifyUser = async (req, res, next) => {
 
 const doSignup = async (req, res, next) => {
   try {
-    
+    const existingUser = await UserModel.findOne({ email: req.body.email });
+    if (existingUser) {
+      // If a user with the provided email already exists, redirect to the signup page with an error message
+      req.session.error = "Email Already Exists";
+      res.redirect("/signup");
+    } else {
+      // If the email is not already in use, create a new user object and save it to the database
+      const newUser = new UserModel({
+        name: req.body.name,
+        email: req.body.email,
+        mobile: req.body.mobile,
+        password: await bcrypt.hash(req.body.password, 10),
+      });
 
-    req.session.email = req.body.email;
-    //  console.log(email);
-    console.log(req.body);
-    req.body.password = await bcrypt.hash(req.body.password, 10);
-    const newUser = await UserModel({
-      name: req.body.name,
-      email: req.body.email,
-      mobile: req.body.mobile,
-      password: req.body.password,
-    });
-    console.log(newUser);
-    await newUser
+     
+      await newUser
       .save()
       .then(() => {
         next();
@@ -273,8 +285,12 @@ const doSignup = async (req, res, next) => {
         console.log(error);
         res.redirect("/register");
       });
+      
+    }
   } catch (error) {
-    next(error);
+    // If there is an error, log it and return an error message to the user
+    console.error(error);
+    res.status(500).send("An error occurred while registering your account. Please try again later.");
   }
 };
 
@@ -553,17 +569,6 @@ const fetchAddress = async (req, res) => {
   } 
 }
 
-// dissply all product
-
-// const getallproductpage = async (req, res) => {
-//   try {
-//     const products = await ProductModel.find({});
-//     res.render("../views/user/shop.ejs", { products });
-//     console.log(products);
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// };
 
 
 
@@ -584,6 +589,7 @@ const getallproductpage = async (req, res) => {
     }
     if (searchKeyword) {
       filter.productname = { $regex: new RegExp(searchKeyword, 'i') };
+      
     }
  
     let sort = {};

@@ -45,11 +45,15 @@
                             <li><a href="/shop">Shop</a></li>
                             <li><a href="#">my account</a>
                                 <ul class="dropdown">
+                               
+                                  
                                     <li><a href="/viewProfile">profile</a></li>
                                     <li><a href="/order-list">Order Details</a></li>
+                                    <li><a href="/logout">Logout</a></li>
+                               
                                     <li><a href="/signup">Signup</a></li>
                                     <li><a href="/login">Login</a></li>
-                                    <li><a href="/logout">Logout</a></li>
+                             
                                 </ul>
                             </li>
                            
@@ -96,17 +100,17 @@
                     </div>
                 </div>
             </div>
-            <div class="hero__items set-bg" data-setbg="img/hero/Dymatize_Hero2.jpg">
+            <%bannerData.forEach((banner)=> { %>
+            <div class="hero__items set-bg" data-setbg="/public/bodyfitHome/img/hero/banner1.jpg">
                 <div class="container">
                     <div class="row">
                         <div class="col-xl-5 col-lg-7 col-md-8">
                             <div class="hero__text">
                                 <h6>Summer Collection</h6>
-                                <h2>Buy Genuine, <br>
+                                <h2 style="color: white;">Buy Genuine, <br>
                                     Stay Fit</h2>
-                                <p>A specialist label creating luxury essentials. Ethically crafted with an unwavering
-                                commitment to exceptional quality.</p>
-                                <a href="#" class="primary-btn">Shop now <span class="arrow_right"></span></a>
+                                <p style="color: white;"><%=banner.bannerText%></p>
+                                <a href="/shop" class="primary-btn" style="color: red;">Shop now <span class="arrow_right"></span></a>
                                 <div class="hero__social">
                                     <a href="#"><i class="fa fa-facebook"></i></a>
                                     <a href="#"><i class="fa fa-twitter"></i></a>
@@ -118,6 +122,7 @@
                     </div>
                 </div>
             </div>
+            <% })%>		
         </div>
     </section>
     <!-- Hero Section End -->
