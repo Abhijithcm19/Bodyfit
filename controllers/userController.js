@@ -644,54 +644,6 @@ const getallproductpage = async (req, res) => {
 
 
 
-
-
-// // checkoutpage
-// const getCheckoutPage = async (req, res) => {
-//   try {
-//     const couponData = req.session.couponData;
-//     const email = req.session.userEmail;
-//     const user = await UserModel.findOne({ email: email });
-
-//     const userId = user._id;
-//     const adderror=req.session.error
-
-//     req.session.error=null
-
-
-//     const cartList = await carts.aggregate([
-//       {
-//         $match: {
-//           userId: new mongoose.Types.ObjectId(userId),
-//         },
-//       },
-//       {
-//         $unwind: "$cartItems",
-//       },
-//       {
-//         $lookup: {
-//           from: "products",
-//           localField: "cartItems.productId",
-//           foreignField: "_id",
-//           as: "product",
-//         },
-//       },
-//       {
-//         $unwind: "$product",
-//       },
-//     ]);
-    
-//     res.render("../views/user/checkout.ejs", {adderror,
-//       cartList: cartList,
-//       userData: user,
-//       userId:userId ,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-
 const getCheckoutPage = async (req, res,next) => {
   try {
     const couponData = req.session.couponData;
@@ -775,89 +727,6 @@ const postCheckoutPage = async (req, res,next) => {
 
 
 
-// const postCheckoutPage = async (req, res) => {
-//   try {
-//     console.log(req.body)
-//     console.log("enter checkout");
-//     const email = req.session.userEmail;
-//     const user = await UserModel.findOne({ email: email });
-
-//     const userId = user._id;
-
-//     const cartList = await carts.aggregate([
-//       {
-//         $match: {
-//           userId: new mongoose.Types.ObjectId(userId),
-//         },
-//       },
-//       {
-//         $unwind: "$cartItems",
-//       },
-//       {
-//         $lookup: {
-//           from: "products",
-//           localField: "cartItems.productId",
-//           foreignField: "_id",
-//           as: "product",
-//         },
-//       },
-//       {
-//         $unwind: "$product",
-//       },
-//     ]);
-//     res.render("../views/user/oderSuccess.ejs", {
-//       cartList: cartList,
-//       userData: user,
-//       userId: req.session.userEmail,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-
-
-//     console.log("item ending");
-//     const totalAmount = cartList.reduce((total, item) => {
-//       return total + item.cartItems.qty * item.product.price;
-//     }, 0);
-//     //  con
-
-//     console.log(req.body.paymentMethod);
-
-//     const order = new orderModel({
-//       userId: userId,
-      
-
-//       orderItems: cartList.map((item) => ({
-//         productId: item.product._id,
-//         quantity: item.cartItems.qty,
-//       })),
-//       totalPrice: totalAmount,
-//       name: req.body.name,
-//       shop: req.body.shop,
-//       state: req.body.state,
-//       city: req.body.city,
-//       street: req.body.street,
-//       code: req.body.code,
-//       mobile: req.body.mobile,
-//       email: req.body.email,
-//       paymentMethod:req.body.paymentMethod
-//     });
-//     await order.save();
-    
-//     res.render("../views/user/oderSuccess.ejs", {
-//       cartList: cartList,
-//       userData: user,
-//       userId: req.session.userEmail,
-//     });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-
-
 const postOrderpage=async(req,res)=>
 {
  const amount=req.body.amount
@@ -881,11 +750,10 @@ amount:amount*100,
 
 
 const paymentConfirm = async (req, res) => {
-  console.log("data emeeeeeeeeeeeeeee");
+ 
   const userId = req.body.userId;
 
-  console.log(userId + "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkky");
-
+ 
   try {
     const razorpayInstance = new Razorpay({
       key_id: "rzp_test_jbSlDDRu4vCwER",
@@ -916,8 +784,7 @@ const paymentConfirm = async (req, res) => {
           $unwind: "$product",
         },
       ]);
-      console.log(cartList + "hhhhhhhhhhhhhhhhhhhhhhhhhy");
-
+  
       console.log(req.body);
 
       const newOrder = new orderModel({
@@ -1040,14 +907,6 @@ const postCashonDelivery = async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
 const codSuccessPage=async(req,res)=>{
   try {
     
@@ -1057,54 +916,7 @@ const codSuccessPage=async(req,res)=>{
   }
 }
 
-// const getUserOrderPage=async(req,res)=>
-// {
-//   try {
-//     let email = req.session.userEmail;
 
-   
-//      const user = await  UserModel.findOne({ email: email });
-    
-//         const userId = user._id;
-//         console.log(userId);
-    
-//          const orderList = await orderModel.aggregate([
-//          {
-//            $match: {
-//              userId: new mongoose.Types.ObjectId(userId),
-//            },
-//         },
-//           {
-//              $unwind: "$orderItems",
-//           },
-//          {
-//          $lookup: {
-//               from: "products",
-//                 localField: "orderItems.productId",
-//                foreignField: "_id",
-//                as: "product",
-//              },
-//            },
-//           {
-//              $unwind: "$product",
-//            },
-//         ]);
-
-
-      
-
-//         res.render("../views/user/userOrder.ejs", {
-//           orderList,orderList, 
-         
-//            userData: user,
-//           userId:userId ,
-//         });
-
-
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
 
 const getUserOrderPage = async (req, res, next) => {
   try {
@@ -1165,39 +977,6 @@ const cancelOrder = async (req, res, next) => {
     next(error);
   }
 };
-
-// const couponcheck = async (req, res , next) => {
-//   try {
-//     const couponCode = req.body.couponCode;
-//     console.log(couponCode);
-
-//     const user = await UserModel.findOne({ email: req.session.userEmail });
-//     const userId = user._id;
-
-
-//     const couponUsed = await couponModel.findOne({
-//       couponCode: couponCode,
-//       user: { $elemMatch: { userId: userId } }
-//     });
-
-//     if (couponUsed) {
-//       res.status(400).send("Coupon has already been used.");
-//     } else {
-
-
-//       const coupon = await couponModel.findOne({
-//         couponCode: couponCode,
-//       });
-
-//       res.status(200).json(coupon);
-//     }
-
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send("Internal server error.");
-//     next(error)
-//   }
-// };
 
 
 

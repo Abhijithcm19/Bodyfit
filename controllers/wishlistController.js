@@ -97,53 +97,6 @@ const addToWishlist = async (req, res) => {
 
 
 
-// const addToWishlist = async (req, res) => {
-//   try {
-//     const email = req.session.userEmail;
-//     const user = await UserModel.findOne({ email: email });
-//     const userId = user._id;
-
-//     if (req.query?.productid && req.session.username) {
-//       const wishlist = await Wishlist.findOne({ userId: userId });
-
-//       if (!wishlist) {
-//         await Wishlist.insertMany([{ userId: userId }]);
-//       }
-
-//       await Wishlist.updateOne(
-//         { userId: userId },
-//         {
-//           $push: { wishlistItems: { productId: req.query.productid } },
-//         }
-//       );
-
-//       res.redirect("/wishlist");
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
-
-
-// const removeWishlist = async (req, res) => {
-//   try {
-//     const email = req.session.userEmail;
-//     const user = await UserModel.findOne({ email: email });
-//     const userId = user._id;
-
-//     const wishlistItemId = req.params.id;
-
-//     await Wishlist.updateOne(
-//       { userId: userId },
-//       { $pull: { WishlistItems: { _id: wishlistItemId } } }
-//     );
-
-//     res.redirect("/wishlist");
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
 
 
 

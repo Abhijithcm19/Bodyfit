@@ -75,15 +75,6 @@ console.log(orderPerMonth);
 };
 
 
-
-// const homePage = async (req, res, next) => {
-//   try {
-//     res.render("../views/admin/adminHome", { title: "Dashboard" });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
-
 const usersPage = async (req, res, next) => {
   try {
     const Users = await UserModel.find();
@@ -111,17 +102,6 @@ const getCategoryPage = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
-// const postCategoriesPage = async (req, res, next) => {
-//   try {
-//     const category = new CategoryModel({ name: req.body.catname });
-//     category.save().then(() => {
-//       res.redirect("/admin/categories");
-//     });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 
 
@@ -372,40 +352,6 @@ const editProduct = async (req, res, next) => {
 
 
 
-// const editProducts = async (req, res) => {
-//   try {
-//     const productData = await ProductModel.findById(req.query.id);
-//     const imageFile = req.files.image; 
-
- 
-//     if (imageFile) {
-//       // Delete the old image file from the server file system
-//       fs.unlinkSync(productData.imagePath);
-
-//       // Save the new image file to the server file system
-//       const imagePath = `uploads/${imageFile.name}`;
-//       imageFile.mv(imagePath);
-//       productData.imagePath = imagePath;
-//     }
-
-    
-//     productData.productname = req.body.productname;
-//     productData.kg = req.body.kg;
-//     productData.flavor = req.body.flavor;
-//     productData.Quantity = req.body.Quantity;
-//     productData.price = req.body.price;
-//     productData.description = req.body.description;
-
-//     await productData.save();
-
-//     res.redirect("/admin/product");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-
-
 
 const productImageEdit = async (req, res,next) => {
   try {
@@ -465,68 +411,7 @@ const editProducts = async (req, res, next) => {
 };
 
 
-// const editProducts = async (req, res) => {
-//   try {
-//     const userData = await ProductModel.findByIdAndUpdate(
-//       { _id: req.query.id },
 
-//       {
-//         $set: {
-//           productname: req.body.productname,
-//           kg: req.body.kg,
-//           flavor: req.body.flavor,
-//           Quantity: req.body.Quantity,
-//           price: req.body.price,
-//           description: req.body.description,
-//         },
-//       }
-//     );
-//     res.redirect("/admin/product");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
-
-
-
-
-
-
-// // editProducts controller function
-// const editProducts = async (req, res) => {
-//   try {
-//     let imagePath = req.body.imagePath; // use existing imagePath by default
-
-//     // check if a new image file was uploaded
-//     if (req.files && req.files.image) {
-//       // delete old image file (if it exists)
-//       if (imagePath) {
-//         fs.unlinkSync(imagePath);
-//       }
-
-//       // update imagePath to path of new uploaded image file
-//       imagePath = req.files.image.path;
-//     }
-
-//     const userData = await ProductModel.findByIdAndUpdate(
-//       { _id: req.query.id },
-//       {
-//         $set: {
-//           productname: req.body.productname,
-//           kg: req.body.kg,
-//           flavor: req.body.flavor,
-//           Quantity: req.body.Quantity,
-//           price: req.body.price,
-//           description: req.body.description,
-//           imagePath: imagePath,
-//         },
-//       }
-//     );
-//     res.redirect("/admin/product");
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
 
 const getCouponPage = async (req, res, next) => {
   const couponData = await couponModel.find();
