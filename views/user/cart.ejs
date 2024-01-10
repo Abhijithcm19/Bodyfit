@@ -14,7 +14,7 @@
 
     <link rel="stylesheet" href="https://kit.fontawesome.com/1024693564.css" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-1dC4Xq3OIzPFvM+njK06YFQZSrs/itRwvzHle5XD5kD9iWgA5m0zBKaz0jKWsCg8iWmLRh5uDXC0JLohV9XyLw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -43,19 +43,21 @@
 <body>
     <style>
         .product_remove button:hover {
-          color: red;
+            color: red;
         }
+
         .decrement-button:hover {
-          color: blue;
-        }.increment-button:hover {
-          color: blue;
+            color: blue;
         }
-      </style>
+
+        .increment-button:hover {
+            color: blue;
+        }
+    </style>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
     <% var totalAmount=0 %>
         <div class="container">
             <div class="row">
@@ -77,11 +79,8 @@
                                     <li><a href="/signup">Signup</a></li>
                                     <li><a href="/login">Login</a></li>
                                     <li><a href="/logout">Logout</a></li>
-                                
                                 </ul>
                             </li>
-
-                          
                         </ul>
                     </nav>
                 </div>
@@ -116,317 +115,272 @@
             </div>
         </section>
         <!-- Breadcrumb Section End -->
-
-
         <!-- Shopping Cart Section Begin -->
         <% if(cartList.length> 0){%>
             <div class="cart-section">
-              <!-- Start Cart Table -->
-              <div class="cart-table-wrapper" data-aos="fade-up" data-aos-delay="0">
-                  <div class="container">
-                      <div class="row">
-                          <div class="col-12">
-                              <div class="table_desc">
-                                  <div class="table_page table-responsive">
-                                      <table>
-                                          <!-- Start Cart Table Head -->
-                                          <thead>
-                                              <tr>
-                                                  <th class="product_thumb">Image</th>
-                                                  <th class="product_name">Product</th>
-                                                  <th class="product-price">Price</th>
-                                                  <th class="product_quantity">Quantity</th>
-                                                  <th class="product_total">Total</th>
-                                                  <th class="product_remove">Delete</th>
-        
-                                              </tr>
-                                          </thead> <!-- End Cart Table Head -->
-                                          <tbody>
-        
-                                            <% var totalAmount=0 %>
-        
-                                            <% cartList.forEach((item)=>{%>
-                                              
-                                              <!-- Start Cart Single Item-->
-                                              <tr id="cart-item-<%= item.cartItems.productId %>">
-        
-                        
-        
-                                              <td class="product_thumb">  <img src="<%= item.product.image_url[0].url %>" /> </td>
-                                                 
-        
-                                                  <td class="product_name"><%=item.product.productname%></td>
-        
-                                                  <td class="product-price">$<%=item.product.price%></td>
-        
-        
-                                                  <!-- decrement and increment section start -->
-        
-                                                  <td class="product_quantity">
-                                                    <div class="d-flex justify-content-center align-items-center w-100">
-                                                      <button type="submit" onclick="decrementCount('<%= item.userId%>','<%= item.cartItems.productId%>','<%=item.product.price%>')" class="decrement-button d-flex justify-content-center align-items-center" data-product-id="<%= item.product._id %>">
-                                                        <i class="fas fa-minus-circle"></i>
-                                                      </button>
-                                                     <p   id="qty<%= item.cartItems.productId%>" class="quantity-text d-flex justify-content-center align-items-center w-100"><%= item.cartItems.qty %></p>
-                                                      <button class="increment-button btn d-flex justify-content-center align-items-center"
-                                                       onclick="incrementCount('<%= item.userId%>','<%= item.cartItems.productId%>','<%=item.product.price%>',' <%=item.product.qty%>')" 
-                                                       data-product-id="<%= item.cartItems.productId%>">
-                                                        <i class="fas fa-plus-circle"></i>
-                                                      </button>
-                                                    </div> 
-                                                </td>
-        
-                                           <!-- decrement and increment section end -->
-        
-                                       <!-- price section start -->
-                                       <% var price = item.cartItems.qty * item.product.price %>
-                                       <% totalAmount += price %>
-                                       <td  class="product_total">$<span id="total-price<%= item.cartItems.productId%>"  >
-                                        <%= price%>
-                                      </span> 
-                                     </td>
-                                      <!-- price section end -->
-        
-                                         <!-- delete -->
-                        
-                                         <td class="product_remove">
-                                          <button onclick="deleteItem('<%= item.cartItems.productId %>','<%= price%>')">
-                                            <i class="fa fa-trash-o"></i>
-                                          </button>
-                                        </td>
-                                      </tr>
-                                         <!-- delete -->
-        
-                                      
-        
-        
-                                              
-                                              </tr> <!-- End Cart Single Item-->
-                                              <%})%>
-        
-                                              
-                                          </tbody>
-        
-                                          
-        
-        
-                                      </table>
-        
-        
-                                  <div class="cart_submit">
-                                    <a  href="/cart" class="btn btn-md btn-golden" type="submit">update cart</a>
-                                  </div>
-                                  </div> </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div> <!-- End Cart Table -->
-        
-        
-          <!-- cart disply section end -->
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-              <!-- Start Coupon Start -->
-              <div class="coupon_area">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                      <div
-                        class="coupon_code left"
-                        data-aos="fade-up"
-                        data-aos-delay="200"
-                      >
-                      <h3>Coupon</h3>
-                      <div class="coupon_inner">
-                        <p>Enter your coupon code if you have one.</p>
-                        <input class="mb-2" placeholder="Coupon code" type="text" id="coupon-code-input" />
-                        <button class="btn btn-md btn-golden" onclick="applyCoupon()">
-                          Apply coupon
-                        </button>
-        
+                <!-- Start Cart Table -->
+                <div class="cart-table-wrapper" data-aos="fade-up" data-aos-delay="0">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="table_desc">
+                                    <div class="table_page table-responsive">
+                                        <table>
+                                            <!-- Start Cart Table Head -->
+                                            <thead>
+                                                <tr>
+                                                    <th class="product_thumb">Image</th>
+                                                    <th class="product_name">Product</th>
+                                                    <th class="product-price">Price</th>
+                                                    <th class="product_quantity">Quantity</th>
+                                                    <th class="product_total">Total</th>
+                                                    <th class="product_remove">Delete</th>
+                                                </tr>
+                                            </thead> <!-- End Cart Table Head -->
+                                            <tbody>
+                                                <% var totalAmount=0 %>
+                                                    <% cartList.forEach((item)=>{%>
+                                                        <!-- Start Cart Single Item-->
+                                                        <tr id="cart-item-<%= item.cartItems.productId %>">
+                                                            <td class="product_thumb"> <img
+                                                                    src="<%= item.product.image_url[0].url %>" /> </td>
+                                                            <td class="product_name">
+                                                                <%=item.product.productname%>
+                                                            </td>
+                                                            <td class="product-price">$<%=item.product.price%>
+                                                            </td>
+                                                            <!-- decrement and increment section start -->
+                                                            <td class="product_quantity">
+                                                                <div
+                                                                    class="d-flex justify-content-center align-items-center w-100">
+                                                                    <button type="submit"
+                                                                        onclick="decrementCount('<%= item.userId%>','<%= item.cartItems.productId%>','<%=item.product.price%>')"
+                                                                        class="decrement-button d-flex justify-content-center align-items-center"
+                                                                        data-product-id="<%= item.product._id %>">
+                                                                        <i class="fas fa-minus-circle"></i>
+                                                                    </button>
+                                                                    <p id="qty<%= item.cartItems.productId%>"
+                                                                        class="quantity-text d-flex justify-content-center align-items-center w-100">
+                                                                        <%= item.cartItems.qty %>
+                                                                    </p>
+                                                                    <button
+                                                                        class="increment-button btn d-flex justify-content-center align-items-center"
+                                                                        onclick="incrementCount('<%= item.userId%>','<%= item.cartItems.productId%>','<%=item.product.price%>',' <%=item.product.qty%>')"
+                                                                        data-product-id="<%= item.cartItems.productId%>">
+                                                                        <i class="fas fa-plus-circle"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                            <!-- decrement and increment section end -->
+                                                            <!-- price section start -->
+                                                            <% var price=item.cartItems.qty * item.product.price %>
+                                                                <% totalAmount +=price %>
+                                                                    <td class="product_total">$<span
+                                                                            id="total-price<%= item.cartItems.productId%>">
+                                                                            <%= price%>
+                                                                        </span>
+                                                                    </td>
+                                                                    <!-- price section end -->
+                                                                    <!-- delete -->
+                                                                    <td class="product_remove">
+                                                                        <button
+                                                                            onclick="deleteItem('<%= item.cartItems.productId %>','<%= price%>')">
+                                                                            <i class="fa fa-trash-o"></i>
+                                                                        </button>
+                                                                    </td>
+                                                        </tr>
+                                                        <!-- delete -->
+                                                        </tr> <!-- End Cart Single Item-->
+                                                        <%})%>
+                                            </tbody>
+                                        </table>
+                                        <div class="cart_submit">
+                                            <a href="/cart" class="btn btn-md btn-golden" type="submit">update cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                      <div
-                        class="coupon_code right"
-                        data-aos="fade-up"
-                        data-aos-delay="400"
-                      >
-                        <h3>Cart Totals</h3>
-                        <div class="coupon_inner">
-                          <div class="cart_subtotal">
-                            <p>Subtotal</p>
-                            <p class="cart_amount">$ <span id="total-amount2"><%= totalAmount%></span></p>
-        
-                          </div>
-                          <div class="cart_subtotal">
-                            <p>Shipping</p>
-                            <p class="cart_amount"><span>Free</span> $00.00</p>
-                          </div>
-                          <a href="#">Calculate shipping</a>
-        
-                          <div class="cart_subtotal">
-                            <p>Total</p>
-                            <p class="cart_amount">$ <span id="total-amount1"> <%= totalAmount%></span></p>
-        
-                            <!-- <p class="cart_amount">$ <span id="total-amount2"><%= totalAmount%></span></p> -->
-                          </div>
-                          <div class="checkout_btn">
-                            <a href="/checkout" class="btn btn-md btn-golden"
-                              >Proceed to Checkout</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-              </div>
-              <!-- End Coupon Start -->
+            </div> <!-- End Cart Table -->
+            <!-- cart disply section end -->
+
+            <!-- Start Coupon Start -->
+            <div class="coupon_area">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code left" data-aos="fade-up" data-aos-delay="200">
+                                <h3>Coupon</h3>
+                                <div class="coupon_inner">
+                                    <p>Enter your coupon code if you have one.</p>
+                                    <input class="mb-2" placeholder="Coupon code" type="text" id="coupon-code-input" />
+                                    <button class="btn btn-md btn-golden" onclick="applyCoupon()">
+                                        Apply coupon
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <div class="coupon_code right" data-aos="fade-up" data-aos-delay="400">
+                                <h3>Cart Totals</h3>
+                                <div class="coupon_inner">
+                                    <div class="cart_subtotal">
+                                        <p>Subtotal</p>
+                                        <p class="cart_amount">$ <span id="total-amount2">
+                                                <%= totalAmount%>
+                                            </span></p>
+                                    </div>
+                                    <div class="cart_subtotal">
+                                        <p>Shipping</p>
+                                        <p class="cart_amount"><span>Free</span> $00.00</p>
+                                    </div>
+                                    <a href="#">Calculate shipping</a>
+                                    <div class="cart_subtotal">
+                                        <p>Total</p>
+                                        <p class="cart_amount">$ <span id="total-amount1">
+                                                <%= totalAmount%>
+                                            </span></p>
+                                    </div>
+                                    <div class="checkout_btn">
+                                        <a href="/checkout" class="btn btn-md btn-golden">Proceed to Checkout</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Coupon Start -->
             </div>
             <!-- ...:::: End Cart Section:::... -->
-        
-            <%}else{%>    
-         <!-- ...::::Start About Us Center Section:::... -->
-         <div class="empty-cart-section section-fluid">
-          <div class="emptycart-wrapper">
-              <div class="container">
-                  <div class="row">
-                      <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
-                          <div class="emptycart-content text-center">
-                              <div class="image">
-                                  <img class="img-fluid" src="/public/asset/images/emprt-cart/empty-cart.png" alt="">
-                              </div>
-                              <h4 class="title">Your Cart is Empty</h4>
-                              <h6 class="sub-title">Sorry Mate... No item Found inside your cart!</h6>
-                              <a href="/shop" class="btn btn-lg btn-golden">Continue Shopping</a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </div> <!-- ...::::End  About Us Center Section:::... -->    <%}%>
-        <!-- Shopping Cart Section End -->
-        <!-- Shopping Cart Section End -->
-
-        <!-- Footer Section Begin -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__logo">
-                            <a href="#"><h3 style="color: white;">BODYFIT</h3></a>
+            <%}else{%>
+                <!-- ...::::Start About Us Center Section:::... -->
+                <div class="empty-cart-section section-fluid">
+                    <div class="emptycart-wrapper">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12 col-md-10 offset-md-1 col-xl-6 offset-xl-3">
+                                    <div class="emptycart-content text-center">
+                                        <div class="image">
+                                            <img class="img-fluid" src="/public/asset/images/emprt-cart/empty-cart.png"
+                                                alt="">
+                                        </div>
+                                        <h4 class="title">Your Cart is Empty</h4>
+                                        <h6 class="sub-title">Sorry Mate... No item Found inside your cart!</h6>
+                                        <a href="/shop" class="btn btn-lg btn-golden">Continue Shopping</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>The customer is at the heart of our unique business model, which includes design.</p>
-                        <a href="#"><img src="/public/bodyfitHome/img/payment.png" alt=""></a>
                     </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>MENU</h6>
-                        <ul>
-                            <li><a href="#">Home</a></li>
-                            <li><a href="#">Catalog</a></li>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Profile</a></li>
-                        </ul>
+                </div> <!-- ...::::End  About Us Center Section:::... -->
+                <%}%>
+                    <!-- Shopping Cart Section End -->
+                    <!-- Shopping Cart Section End -->
+                    <!-- Footer Section Begin -->
+                    <footer class="footer">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-6">
+                                    <div class="footer__about">
+                                        <div class="footer__logo">
+                                            <a href="#">
+                                                <h3 style="color: white;">BODYFIT</h3>
+                                            </a>
+                                        </div>
+                                        <p>The customer is at the heart of our unique business model, which includes
+                                            design.</p>
+                                        <a href="#"><img src="/public/bodyfitHome/img/payment.png" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 offset-lg-1 col-md-3 col-sm-6">
+                                    <div class="footer__widget">
+                                        <h6>MENU</h6>
+                                        <ul>
+                                            <li><a href="#">Home</a></li>
+                                            <li><a href="#">Catalog</a></li>
+                                            <li><a href="#">Contact Us</a></li>
+                                            <li><a href="#">Profile</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="footer__widget">
+                                        <h6>HELP </h6>
+                                        <ul>
+                                            <li><a href="#">Contact Us</a></li>
+                                            <li><a href="#">Payment Methods</a></li>
+                                            <li><a href="#">Delivary</a></li>
+                                            <li><a href="#">Return & Exchanges</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2 col-md-3 col-sm-6">
+                                    <div class="footer__widget">
+                                        <h6>Contact Us </h6>
+                                        <ul>
+                                            <li><a href="#"> HiLight business Park , calicut ,kerala</a></li>
+                                            <li><a href="#"> 6238424753</a></li>
+                                            <li><a href="#"> shoehub2023@gmail.com</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <div class="footer__copyright__text">
+                                        <p>Copyright ©
+                                            <script>
+                                                document.write(new Date().getFullYear());
+                                            </script>2020
+                                            All rights reserved | This template is made with <i class="fa fa-heart-o"
+                                                aria-hidden="true"></i> by <a href="https://colorlib.com"
+                                                target="_blank">Abhijith</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- Footer Section End -->
+                    <!-- Search Begin -->
+                    <div class="search-model">
+                        <div class="h-100 d-flex align-items-center justify-content-center">
+                            <div class="search-close-switch">+</div>
+                            <form class="search-model-form">deal
+                                <input type="text" id="search-input" placeholder="Search here.....">
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>HELP                        </h6>
-                        <ul>
-                            <li><a href="#">Contact Us</a></li>
-                            <li><a href="#">Payment Methods</a></li>
-                            <li><a href="#">Delivary</a></li>
-                            <li><a href="#">Return & Exchanges</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6">
-                    <div class="footer__widget">
-                        <h6>Contact Us                      </h6>
-                        <ul>
-                            <li><a href="#">	HiLight business Park , calicut ,kerala</a></li>
-                            <li><a href="#">	6238424753</a></li>
-                            <li><a href="#">	shoehub2023@gmail.com</a></li>
-                           
-                        </ul>
-                    </div>
-                </div>
-             
-            </div>
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        <p>Copyright ©
-                            <script>
-                                document.write(new Date().getFullYear());
-                            </script>2020
-                            All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Abhijith</a>
-                        </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
-        <!-- Search Begin -->
-        <div class="search-model">
-            <div class="h-100 d-flex align-items-center justify-content-center">
-                <div class="search-close-switch">+</div>
-                <form class="search-model-form">deal
-                    <input type="text" id="search-input" placeholder="Search here.....">
-                </form>
-            </div>
-        </div>
-        <!-- Search End -->
-
-        <!-- Js Plugins -->
-        
-        
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-        <script>
-            const reloadButton = document.getElementById("reloadButton");
-            reloadButton.addEventListener("click", () => {
-              location.reload();
-            });
-          </script>
-               <script src="/public/productDetails/js/vendor/vendor.min.js"></script>
-               <script src="/public/productDetails/js/plugins/plugins.min.js"></script>
-           
-               <!-- Main JS -->
-               <script src="/public/productDetails/js/main.js"></script>
-<script src="https://kit.fontawesome.com/1024693564.js" crossorigin="anonymous"></script>
-        <script src="/public/asset/cart.js"></script>
-        <script src="/public/bodyfitHome/js/jquery-3.3.1.min.js"></script>
-        <script src="/public/bodyfitHome/js/bootstrap.min.js"></script>
-        <script src="/public/bodyfitHome/js/jquery.nice-select.min.js"></script>
-        <script src="/public/bodyfitHome/js/jquery.nicescroll.min.js"></script>
-        <script src="/public/bodyfitHome/js/jquery.magnific-popup.min.js"></script>
-        <script src="/public/bodyfitHome/js/jquery.countdown.min.js"></script>
-        <script src="/public/bodyfitHome/js/jquery.slicknav.js"></script>
-        <script src="/public/bodyfitHome/js/mixitup.min.js"></script>
-        <script src="/public/bodyfitHome/js/owl.carousel.min.js"></script>
-        <script src="/public/bodyfitHome/js/main.js"></script>
+                    <!-- Search End -->
+                    <!-- Js Plugins -->
+                    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+                    <script>
+                        const reloadButton = document.getElementById("reloadButton");
+                        reloadButton.addEventListener("click", () => {
+                            location.reload();
+                        });
+                    </script>
+                    <script src="/public/productDetails/js/vendor/vendor.min.js"></script>
+                    <script src="/public/productDetails/js/plugins/plugins.min.js"></script>
+                    <!-- Main JS -->
+                    <script src="/public/productDetails/js/main.js"></script>
+                    <script src="https://kit.fontawesome.com/1024693564.js" crossorigin="anonymous"></script>
+                    <script src="/public/asset/cart.js"></script>
+                    <script src="/public/bodyfitHome/js/jquery-3.3.1.min.js"></script>
+                    <script src="/public/bodyfitHome/js/bootstrap.min.js"></script>
+                    <script src="/public/bodyfitHome/js/jquery.nice-select.min.js"></script>
+                    <script src="/public/bodyfitHome/js/jquery.nicescroll.min.js"></script>
+                    <script src="/public/bodyfitHome/js/jquery.magnific-popup.min.js"></script>
+                    <script src="/public/bodyfitHome/js/jquery.countdown.min.js"></script>
+                    <script src="/public/bodyfitHome/js/jquery.slicknav.js"></script>
+                    <script src="/public/bodyfitHome/js/mixitup.min.js"></script>
+                    <script src="/public/bodyfitHome/js/owl.carousel.min.js"></script>
+                    <script src="/public/bodyfitHome/js/main.js"></script>
 </body>
 
 </html>

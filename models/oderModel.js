@@ -1,27 +1,27 @@
-const mongoose=require('mongoose');
-const Adminproduct=require('../models/adminModel');
-const userModel=require('../models/userModel')
-const productModel=require('../models/productModel')
+const mongoose = require("mongoose");
+const Adminproduct = require("../models/adminModel");
+const userModel = require("../models/userModel");
+const productModel = require("../models/productModel");
 
-const orderSchema = new mongoose.Schema({
-
-  userId:{
-    type:mongoose.SchemaTypes.ObjectId,
-},
-    orderItems: [{
-      
-        productId:{
-          type:mongoose.SchemaTypes.ObjectId,  required:true,
-
+const orderSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+    },
+    orderItems: [
+      {
+        productId: {
+          type: mongoose.SchemaTypes.ObjectId,
+          required: true,
+        },
+        quantity: {
+          type: Number,
+        },
       },
-      quantity: {
-        type: Number,
-      },
-       
-    }],
+    ],
     orderStatus: {
       type: String,
-      default: 'pending'
+      default: "pending",
     },
     paymentStatus: {
       type: String,
@@ -40,76 +40,75 @@ const orderSchema = new mongoose.Schema({
     },
     isPaid: {
       type: Boolean,
-      default: false
+      default: false,
     },
     paidAt: {
-      type: Date
+      type: Date,
     },
     isDelivered: {
       type: Boolean,
-      default: false
+      default: false,
     },
     deliveredAt: {
-      type: Date
+      type: Date,
     },
     Qtystatus: {
       type: Boolean,
-      default: true
+      default: true,
     },
 
-  
     name: {
       type: String,
-      require:true
+      require: true,
     },
 
     shop: {
       type: String,
-      required:true,
+      required: true,
     },
 
     state: {
       type: String,
-      require:true
+      require: true,
     },
     city: {
       type: String,
-      required:true,
+      required: true,
     },
     street: {
       type: String,
-      required:true,
+      required: true,
     },
-   
+
     code: {
       type: Number,
-      required:true,
+      required: true,
     },
     mobile: {
       type: Number,
-      required:true,
+      required: true,
     },
     email: {
       type: String,
-      required:true,
+      required: true,
     },
 
+    paymentMethod: { type: String },
 
-    paymentMethod:{type:String},
-
-    order_id:{
+    order_id: {
       type: String,
     },
 
     status: {
       type: String,
       required: true,
-      default: 'Pending',
+      default: "Pending",
     },
+  },
+  {
+    timestamps: true,
+  }
+);
+const order = mongoose.model("order", orderSchema);
 
-  }, {
-    timestamps: true
-  });
-  const order = mongoose.model('order', orderSchema);
-
-module.exports=order; 
+module.exports = order;

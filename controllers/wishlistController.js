@@ -10,21 +10,11 @@ const carts = require("../models/cart");
 const CategoryModel = require("../models/categoryModel");
 const orderModel = require("../models/oderModel");
 
-
-
-
-
-
-
-
-
 const displayWishlist = async (req, res, next) => {
   const email = req.session.userEmail;
   const user = await UserModel.findOne({ email: email });
 
- 
   const userId = user._id;
-  console.log(user._id);
 
   const wishlistData = await Wishlist.aggregate([
     {
@@ -48,15 +38,11 @@ const displayWishlist = async (req, res, next) => {
     },
   ]);
 
-  console.log("wishlistData: ", wishlistData);
-
   res.render("../views/user/wishlist", {
     wishlistData: wishlistData,
     userId: req.session.username,
-
   });
 };
-
 
 const addToWishlist = async (req, res) => {
   try {
@@ -71,13 +57,11 @@ const addToWishlist = async (req, res) => {
         await Wishlist.insertMany([{ userId: userId }]);
       }
 
-      // Check if the product is already in the wishlist
       const productExists = await Wishlist.exists({
         userId: userId,
         "wishlistItems.productId": req.query.productid,
       });
 
-      // If the product is not in the wishlist, add it
       if (!productExists) {
         await Wishlist.updateOne(
           { userId: userId },
@@ -94,12 +78,6 @@ const addToWishlist = async (req, res) => {
   }
 };
 
-
-
-
-
-
-
 const removeWishlist = async (req, res) => {
   const id = req.query.id;
   const objId = mongoose.Types.ObjectId(req.query.id);
@@ -111,12 +89,8 @@ const removeWishlist = async (req, res) => {
   });
 };
 
-
-
-
 module.exports = {
   displayWishlist,
-    addToWishlist,
-    removeWishlist,
-  
-}
+  addToWishlist,
+  removeWishlist,
+};

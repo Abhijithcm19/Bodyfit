@@ -9,14 +9,9 @@ const cartcontroller = require("../controllers/cartController");
 
 const wishlistcontroller = require("../controllers/wishlistController");
 
-
-
-const salesReport =require("../multer&nodemailer/export")
+const salesReport = require("../multer&nodemailer/export");
 
 const { noSession, userLogin } = require("../middleware/isLogin");
-
-
-
 
 router.get("/", controller.home);
 
@@ -62,7 +57,11 @@ router.get("/profile-address", userLogin, controller.getProfileAddressPage);
 
 router.post("/address", controller.postAddressPage);
 
-router.post("/user_profiles/:Dataid",userLogin,controller.postusereditProfilePage);
+router.post(
+  "/user_profiles/:Dataid",
+  userLogin,
+  controller.postusereditProfilePage
+);
 
 router.get("/change-Password", userLogin, controller.getchangepasswordPage);
 
@@ -88,15 +87,15 @@ router.post("/checkoutn", userLogin, controller.postCheckoutPage);
 
 router.post("/couponcheck", userLogin, controller.couponcheck);
 
-router.post('/order',userLogin,controller.postOrderpage)
+router.post("/order", userLogin, controller.postOrderpage);
 
-router.post("/cashon-delivery",userLogin,controller.postCashonDelivery)
+router.post("/cashon-delivery", userLogin, controller.postCashonDelivery);
 
-router.get("/order-list", userLogin,controller.getUserOrderPage);
+router.get("/order-list", userLogin, controller.getUserOrderPage);
 
-router.post("/cancel-order",userLogin, controller.cancelOrder);
+router.post("/cancel-order", userLogin, controller.cancelOrder);
 
-router.post('/confirm-order',userLogin,controller.paymentConfirm)
+router.post("/confirm-order", userLogin, controller.paymentConfirm);
 
 router.get("/exportorder", salesReport.exportorder);
 
@@ -106,22 +105,12 @@ router.post("/update-address/:id", controller.updateAddressPage);
 
 router.get("/address-delete", controller.userAddressDelete);
 
-router.get("/wishlist",userLogin, wishlistcontroller.displayWishlist);
+router.get("/wishlist", userLogin, wishlistcontroller.displayWishlist);
 
-router.post("/abc",userLogin,wishlistcontroller.addToWishlist);
+router.post("/abc", userLogin, wishlistcontroller.addToWishlist);
 
+router.get("/removeWishlist", wishlistcontroller.removeWishlist);
 
-
-
-router.get("/removeWishlist", wishlistcontroller.removeWishlist);      
-
-
-router.get("/success-page",controller.codSuccessPage)
-
-
-
-
-
-
+router.get("/success-page", controller.codSuccessPage);
 
 module.exports = router;

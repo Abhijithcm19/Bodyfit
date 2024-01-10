@@ -8,20 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bodyfit | Template</title>
-
     <!-- Google Font -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <link rel="stylesheet" href="https://kit.fontawesome.com/1024693564.css" crossorigin="anonymous">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         integrity="sha512-1dC4Xq3OIzPFvM+njK06YFQZSrs/itRwvzHle5XD5kD9iWgA5m0zBKaz0jKWsCg8iWmLRh5uDXC0JLohV9XyLw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
         rel="stylesheet">
-
-
     <!-- Css Styles -->
     <link rel="stylesheet" href="/public/bodyfitHome/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/public/bodyfitHome/css/font-awesome.min.css" type="text/css">
@@ -31,35 +25,26 @@
     <link rel="stylesheet" href="/public/bodyfitHome/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="/public/bodyfitHome/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/public/bodyfitHome/css/style.css" type="text/css">
-
-
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-
     <link rel="stylesheet" href="/public/cart_asset/css/open-iconic-bootstrap.min.css">
     <link rel="stylesheet" href="/public/cart_asset/css/animate.css">
-
     <link rel="stylesheet" href="/public/cart_asset/css/owl.carousel.min.css">
     <link rel="stylesheet" href="/public/cart_asset/css/owl.theme.default.min.css">
     <link rel="stylesheet" href="/public/cart_asset/css/magnific-popup.css">
-
     <link rel="stylesheet" href="/public/cart_asset/css/aos.css">
-
     <link rel="stylesheet" href="/public/cart_asset/css/ionicons.min.css">
-
     <link rel="stylesheet" href="/public/cart_asset/css/bootstrap-datepicker.css">
     <link rel="stylesheet" href="/public/cart_asset/css/jquery.timepicker.css">
-
-
     <link rel="stylesheet" href="/public/cart_asset/css/flaticon.css">
     <link rel="stylesheet" href="/public/cart_asset/css/icomoon.css">
     <link rel="stylesheet" href="/public/cart_asset/css/style.css">
 </head>
 
 <body>
-<!-- Page Preloder -->
-<div id="preloder">
-    <div class="loader"></div>
-</div>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
 
     <div class="container">
@@ -76,20 +61,14 @@
                         <li><a href="/shop">Shop</a></li>
                         <li><a href="#">my account</a>
                             <ul class="dropdown">
-                           
-                              
                                 <li><a href="/viewProfile">profile</a></li>
                                 <li><a href="/order-list">Order Details</a></li>
                                 <li><a href="/logout">Logout</a></li>
-                           
+
                                 <li><a href="/signup">Signup</a></li>
                                 <li><a href="/login">Login</a></li>
-                         
                             </ul>
                         </li>
-                       
-                        <!-- <li><a href="/login">Login</a></li>
-                        <li><a href="/logout">Logout</a></li> -->
                     </ul>
                 </nav>
             </div>
@@ -104,27 +83,26 @@
         </div>
         <div class="canvas__open"><i class="fa fa-bars"></i></div>
     </div>
-</header>
-<!-- Header Section End -->
-        <section class="breadcrumb-option">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="breadcrumb__text">
-                            <h4>Shopping Whishlist</h4>
-                            <div class="breadcrumb__links">
-                                <a href="./index.html">Home</a>
-                                <a href="./shop.html">Shop</a>
-                                <span>Whishlist</span>
-                            </div>
+    </header>
+    <!-- Header Section End -->
+    <section class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__text">
+                        <h4>Shopping Whishlist</h4>
+                        <div class="breadcrumb__links">
+                            <a href="./index.html">Home</a>
+                            <a href="./shop.html">Shop</a>
+                            <span>Whishlist</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- Breadcrumb Section End -->
-
-        <% var totalAmount=0 %>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <% var totalAmount=0 %>
         <!-- Shopping Cart Section Begin -->
         <section class="ftco-section ftco-cart">
             <div class="container">
@@ -138,7 +116,6 @@
                                         <th>&nbsp;</th>
                                         <th>Product</th>
                                         <th>Price</th>
-
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -148,44 +125,31 @@
                                             <td class="product-remove"><button
                                                     onclick="removeWishlist('<%=item.productId %>')"><span
                                                         class="ion-ios-close"></span></button></span></button></td>
-
                                             <td class="image-prod">
                                                 <div class="img"
                                                     style="background-image:url(<%=item.product.image_url[0].url%>);">
                                                 </div>
                                             </td>
-
-
                                             <td class="product-name">
                                                 <h3>
                                                     <%=item.product.productname%>
                                                 </h3>
-                                                <!-- <p>Far far away, behind the word mountains, far from the countries</p> -->
                                             </td>
-
                                             <td class="price">
                                                 <h5>$<%=item.product.price%>
                                             </td>
-
-
-
                                             <td class="total"><a id="addCart<%= item.product._id %>"
                                                     onclick="addCart('<%= item.product._id %>')"
                                                     style="cursor: pointer;" class="btn cart px-auto">ADD TO CART</a>
                                             </td>
-
                                             <script>
-
                                             </script>
                                             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
                                             <script
                                                 src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
                                             <script
                                                 src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
                                             <script>
-
                                                 function addCart(productId) {
                                                     const url = window.location.origin;
                                                     try {
@@ -206,25 +170,17 @@
                                                     } catch (err) {
                                                         alert('err')
                                                     }
-
                                                 }
                                             </script>
-
                                         </tr><!-- END TR-->
-
                                         <%})%>
-
-
-
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
-        <!-- Shopping Cart Section End -->
         <!-- Shopping Cart Section End -->
 
         <!-- Footer Section Begin -->
@@ -271,16 +227,13 @@
                                 <li><a href="#"> HiLight business Park , calicut ,kerala</a></li>
                                 <li><a href="#"> 6238424753</a></li>
                                 <li><a href="#"> shoehub2023@gmail.com</a></li>
-
                             </ul>
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-lg-12 text-center">
                         <div class="footer__copyright__text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             <p>Copyright ©
                                 <script>
                                     document.write(new Date().getFullYear());
@@ -289,7 +242,6 @@
                                     aria-hidden="true"></i> by <a href="https://colorlib.com"
                                     target="_blank">Abhijith</a>
                             </p>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         </div>
                     </div>
                 </div>
@@ -318,9 +270,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
-
-
-
         <script>
             const removeWishlist = async (id) => {
                 const objId = mongoose.Types.ObjectId(id);
@@ -343,14 +292,8 @@
                     });
                 }
             };
-
-            // Example usage
             removeWishlist("1234567890");
-
         </script>
-
-
-
         <script src="/public/cart_asset/js/jquery.min.js"></script>
         <script src="/public/cart_asset/js/jquery-migrate-3.0.1.min.js"></script>
         <script src="/public/cart_asset/js/popper.min.js"></script>
@@ -368,10 +311,6 @@
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
         <script src="/public/cart_asset/js/google-map.js"></script>
         <script src="/public/cart_asset/js/main.js"></script>
-
-
-
-
         <script src="https://kit.fontawesome.com/1024693564.js" crossorigin="anonymous"></script>
         <script src="/public/asset/cart.js"></script>
         <script src="/public/bodyfitHome/js/jquery-3.3.1.min.js"></script>

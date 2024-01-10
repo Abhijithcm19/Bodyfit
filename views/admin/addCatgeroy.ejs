@@ -1,36 +1,35 @@
-<%- include('../admin/layouts/admin-header.ejs') %> 
+<%- include('../admin/layouts/admin-header.ejs') %>
 
- <style>
+<style>
   .card {
-     margin: 20px;
-     
- }
-   </style>
+    margin: 20px;
+  }
+</style>
 
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
       <h4 class="card-title">category</h4>
       <p class="card-description">
-        Use the <code>.form-inline</code> class to display a series of labels, form controls, and buttons on a single horizontal row
+        Use the <code>.form-inline</code> class to display a series of labels,
+        form controls, and buttons on a single horizontal row
       </p>
-      <form action="/admin/add-categories" method="POST" class="form-inline"  >
-   
+      <form action="/admin/add-categories" method="POST" class="form-inline">
         <div class="input-group mb-2 mr-sm-2">
-      
-          <input type="text" class="form-control" id="inlineFormInputGroupUsername2" placeholder="category">
+          <input
+            type="text"
+            class="form-control"
+            id="inlineFormInputGroupUsername2"
+            placeholder="category"
+          />
         </div>
         <div class="form-check mx-sm-2">
           <label class="form-check-label">
-            <input type="checkbox" class="form-check-input" checked>
-        
+            <input type="checkbox" class="form-check-input" checked />
           </label>
         </div>
         <button type="submit" class="btn btn-primary mb-2">Add</button>
       </form>
     </div>
   </div>
-</div> 
-
-
-
+</div>

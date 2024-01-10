@@ -125,8 +125,11 @@ Swal.fire({
     });
   }
   
-
   
+  
+  // cart product delete
+
+
 // cart product delete
 
 function deleteItem(productId,price) {

@@ -1,129 +1,112 @@
 <%- include('../admin/layouts/admin-header.ejs') %>
-
-<style>
- .card {
-    margin: 25px;
-    
-}
+  <style>
+    .card {
+      margin: 25px;
+    }
   </style>
-
-<div class="col-lg-8 grid-margin stretch-card" >
-  <div class="card" >
-    <div class="card-body" >
-      <h4 class="card-title">Banner management</h4>
-      <p class="card-description">
-        Add Banner
-      </p>
-<form action="/admin/addBanner" method="POST"class="forms-sample">
-  <div class="form-group">
-    <label for="exampleInputName1">Offer Type</label>
-    <input type="text"  id=""class="form-control" id="exampleInputName1"  name="offerType" placeholder="Type here" required>
-  </div>
-  <div class="form-group"> 
-    <label for="exampleInputName1"> Banner Text</label>
-    <input type="text"  id=""class="form-control" id="exampleInputName1" name="bannerText"  placeholder="Type here" required>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputName1">Coupon Name</label>
-    <input type="text"  id=""class="form-control" id="exampleInputName1"  name="couponName" placeholder="Type here" required>
-  </div>
-
-    
-   
-    <div class="card-body">
-      <div class="input-upload ">
-          <input type="file" multiple class="form-control  block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" id="imgView" name="bannerImage" 
-              placeholder="Choose an image" required onchange="viewImage(event)"/>
+  <div class="col-lg-8 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Banner management</h4>
+        <p class="card-description">
+          Add Banner
+        </p>
+        <form action="/admin/addBanner" method="POST" class="forms-sample">
+          <div class="form-group">
+            <label for="exampleInputName1">Offer Type</label>
+            <input type="text" id="" class="form-control" id="exampleInputName1" name="offerType"
+              placeholder="Type here" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1"> Banner Text</label>
+            <input type="text" id="" class="form-control" id="exampleInputName1" name="bannerText"
+              placeholder="Type here" required>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputName1">Coupon Name</label>
+            <input type="text" id="" class="form-control" id="exampleInputName1" name="couponName"
+              placeholder="Type here" required>
+          </div>
+          <div class="card-body">
+            <div class="input-upload ">
+              <input type="file" multiple
+                class="form-control  block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                id="imgView" name="bannerImage" placeholder="Choose an image" required onchange="viewImage(event)" />
+            </div>
+          </div>
       </div>
+      <button type="submit" class="btn btn-primary me-2"> submit banners</button>
+      <button class="btn btn-light">Cancel</button>
+      </form>
+    </div>
   </div>
   </div>
-  <button type="submit" class="btn btn-primary me-2"> submit banners</button>
-  <button class="btn btn-light">Cancel</button>
-</form>
-</div>
-</div>
-</div>
-
-
-
-
-
-
-
-<div class="container-fluid py-4">
-  <div class="row">
-    <div class="col-12">
-      <div class="card mb-4">
-        <div class="card-header pb-0">
-          <h6>Authors table</h6>
-        </div>
-        <div class="card-body px-0 pt-0 pb-2">
-          <div class="table-responsive p-0">
-            <table class="table align-items-center mb-0">
-              <thead>
-                <tr>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Offer Type</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Banner Text</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">couponName</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
-                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">action</th>
-                </tr>
-              </thead>
-              <tbody>
+  <div class="container-fluid py-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-header pb-0">
+            <h6>Authors table</h6>
+          </div>
+          <div class="card-body px-0 pt-0 pb-2">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Offer Type</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Banner Text
+                    </th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">couponName</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Status</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">action</th>
+                  </tr>
+                </thead>
+                <tbody>
                 <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
                   <% banners.forEach(function(categ,index){ %>
-
-
-
-                  <tr class="text-gray-700 dark:text-gray-400">
+                    <tr class="text-gray-700 dark:text-gray-400">
                       <td class="px-4 py-3">
-                          <div class="flex items-center text-sm">
-                              <div>
-                                  <%=  index ++ %>
-                              </div>
+                        <div class="flex items-center text-sm">
+                          <div>
+                            <%= index ++ %>
                           </div>
+                        </div>
                       </td>
                       <td class="px-4 py-3 text-sm">
                         <%= categ.offerType %>
-                    </td>
-                    <td class="px-4 py-3 text-sm">
-                      <%= categ.bannerText %>
-                  </td>
+                      </td>
                       <td class="px-4 py-3 text-sm">
-                          <%= categ.couponName %>
+                        <%= categ.bannerText %>
+                      </td>
+                      <td class="px-4 py-3 text-sm">
+                        <%= categ.couponName %>
                       </td>
                       <td class="px-4 py-3 text-xs">
                         <% if(categ.banDeleted){ %>
-                            <span class="badge rounded-pill alert-danger">Blocked</span>
-                            <% } else { %>
-                                <span class="badge rounded-pill alert-success">Active</span>
-                                <% } %>
-                    </td>
-                    <td>
-                       
-                            <% if(categ.banDeleted===false){ %>
-                                 
-                                   <a class=" btn-sm btn-btn-primary" href="/admin/blockBanner/<%= categ._id %>">block</a>
-                                
-                                <% } else { %>
-                                    
-                                    <a href="/admin/unblockBanner/<%= categ._id%>" class="btn btn-success">Unblock</a>
-                                   
-                                    <% } %>
-                        </a>
+                          <span class="badge rounded-pill alert-danger">Blocked</span>
+                          <% } else { %>
+                            <span class="badge rounded-pill alert-success">Active</span>
+                            <% } %>
+                      </td>
+                      <td>
+                        <% if(categ.banDeleted===false){ %>
 
-                
-                    </td>
-                </tr>
-                <% }) %>
-          
-              </tbody>
-                
-              
-            </table>
+                          <a class=" btn-sm btn-btn-primary" href="/admin/blockBanner/<%= categ._id %>">block</a>
+
+                          <% } else { %>
+
+                            <a href="/admin/unblockBanner/<%= categ._id%>" class="btn btn-success">Unblock</a>
+
+                            <% } %>
+                              </a>
+                      </td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>

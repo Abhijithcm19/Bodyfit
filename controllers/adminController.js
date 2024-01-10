@@ -17,12 +17,10 @@ const ProductModel = require("../models/productModel");
 const UserModel = require("../models/userModel");
 const orderModel = require("../models/oderModel");
 const product = require("../models/productModel");
-const path = require('path');
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 const couponModel = require("../models/couponModel");
 const BannerModel = require("../models/banner");
-
-
 
 const loginPage = async (req, res, next) => {
   try {
@@ -46,40 +44,41 @@ const loginPage = async (req, res, next) => {
   }
 };
 
-
 const adminhomepageload = async (req, res) => {
-  
-  // find order
   const order = await product.find();
-  // find order
   const boardorderdata = await orderModel.find();
-  // user
   const userdata = await UserModel.find();
-  // product count
   const productcount = await product.find();
-  // Return','Shipped', 'Placed', 'Delivered', 'Cancelled
-const ordePending = await orderModel.find({status:'pending'}).count()
-const Return = await orderModel.find({status:'return'}).count()
-const shipped = await orderModel.find({status:'shippid'}).count()
-const Delivered = await orderModel.find({status:'delivered'}).count()
-const Cancelled = await orderModel.find({status:'cancel'}).count()
+  const ordePending = await orderModel.find({ status: "pending" }).count();
+  const Return = await orderModel.find({ status: "return" }).count();
+  const shipped = await orderModel.find({ status: "shippid" }).count();
+  const Delivered = await orderModel.find({ status: "delivered" }).count();
+  const Cancelled = await orderModel.find({ status: "cancel" }).count();
 
-let orderPerMonth=[]
-    for (let i=0;i<12;i++){
-        let numberOfOrders=await orderModel.find({month:i}).count()
-        orderPerMonth.push(numberOfOrders)
-    }
-console.log(orderPerMonth);
+  let orderPerMonth = [];
+  for (let i = 0; i < 12; i++) {
+    let numberOfOrders = await orderModel.find({ month: i }).count();
+    orderPerMonth.push(numberOfOrders);
+  }
 
-  res.render("../views/admin/adminHome.ejs", {  boardorderdata, order,userdata,productcount,ordePending,Return,shipped,Delivered,Cancelled,orderPerMonth })
+  res.render("../views/admin/adminHome.ejs", {
+    boardorderdata,
+    order,
+    userdata,
+    productcount,
+    ordePending,
+    Return,
+    shipped,
+    Delivered,
+    Cancelled,
+    orderPerMonth,
+  });
 };
-
 
 const usersPage = async (req, res, next) => {
   try {
     const Users = await UserModel.find();
     let index = 1;
-    console.log("hii");
 
     res.render("../views/admin/userList", { title: "Users", index, Users });
   } catch (error) {
@@ -89,12 +88,13 @@ const usersPage = async (req, res, next) => {
 
 const getCategoryPage = async (req, res) => {
   try {
-    const errorData = req.session.error
-    req.session.error = null
+    const errorData = req.session.error;
+    req.session.error = null;
     const categoryData = await CategoryModel.find({});
     const catData = { name: "Example Category" };
     res.render("../views/admin/categories", {
-      errorData, catData,
+      errorData,
+      catData,
       categorydetails: categoryData,
     });
   } catch (error) {
@@ -103,21 +103,17 @@ const getCategoryPage = async (req, res) => {
   }
 };
 
-
-
-
 const postCategoriesPage = (req, res) => {
-  let categoryName = req.body.catname.trim(); // trim whitespace
-
-
+  let categoryName = req.body.catname.trim();
   CategoryModel.findOne({ name: categoryName })
-    .then(existingCategory => {
+    .then((existingCategory) => {
       if (existingCategory) {
         req.session.error = "Category already exists.";
         res.redirect("/admin/categories");
       } else {
         const category = new CategoryModel({ name: categoryName });
-        category.save()
+        category
+          .save()
           .then(() => {
             res.redirect("/admin/categories");
           })
@@ -131,13 +127,10 @@ const postCategoriesPage = (req, res) => {
     });
 };
 
-
-
-
 const productsPage = async (req, res, next) => {
   try {
     const Categories = await CategoryModel.find();
-    const products = await ProductModel.find().sort({createdAt: -1});
+    const products = await ProductModel.find().sort({ createdAt: -1 });
     let index = 1;
     res.render("../views/admin/adminProductList", {
       title: "Products",
@@ -151,8 +144,6 @@ const productsPage = async (req, res, next) => {
 };
 
 const addProductPage = (req, res) =>
-
-
   CategoryModel.find()
     .then((categories) => {
       const catData = { edit: false, categories, name: "add product" };
@@ -163,11 +154,9 @@ const addProductPage = (req, res) =>
       console.log(error);
     });
 
-
-
 const addProduct = async (req, res, next) => {
-
-  try { let images = [];
+  try {
+    let images = [];
 
     if (req.files) {
       for (let i = 0; i < req.files.length; i++) {
@@ -185,7 +174,6 @@ const addProduct = async (req, res, next) => {
       }
     }
 
-
     const newProduct = ProductModel({
       productname: req.body.productname,
       description: req.body.description,
@@ -194,22 +182,16 @@ const addProduct = async (req, res, next) => {
       flavor: req.body.flavor,
       qty: req.body.Quantity,
       image_url: images,
-      category:req.body.catagory_id
-
+      category: req.body.catagory_id,
     });
 
-    console.log(req.body);
     const Product = new ProductModel(newProduct);
-    await Product.save()
+    await Product.save();
     res.redirect("/admin/product");
-
   } catch (error) {
     console.error(error);
   }
 };
-
-
-
 
 const doLogin = async (req, res, next) => {
   try {
@@ -225,7 +207,6 @@ const doLogin = async (req, res, next) => {
         return res.redirect("/admin");
       } else {
         return res.redirect("/admin/login");
-        console.log("hallo");
       }
     } else {
       return res.redirect("/admin/login");
@@ -248,7 +229,6 @@ const doLogout = async (req, res, next) => {
 const blockUser = async (req, res, next) => {
   const userId = req.params.id;
   try {
-    console.log("hii");
     await UserModel.updateOne(
       { _id: userId },
       { $set: { isBlocked: true } }
@@ -263,7 +243,6 @@ const blockUser = async (req, res, next) => {
 const unblockUser = async (req, res, next) => {
   const userId = req.params.id;
   try {
-    console.log("hii");
     await UserModel.updateOne(
       { _id: userId },
       { $set: { isBlocked: false } }
@@ -278,7 +257,6 @@ const unblockUser = async (req, res, next) => {
 const blockCategory = async (req, res, next) => {
   const catId = req.params.id;
   try {
-    console.log("hii");
     await CategoryModel.updateOne(
       { _id: catId },
       { $set: { iBlocked: true } }
@@ -293,7 +271,6 @@ const blockCategory = async (req, res, next) => {
 const unblockCategory = async (req, res, next) => {
   const catId = req.params.id;
   try {
-    console.log("hii");
     await CategoryModel.updateOne(
       { _id: catId },
       { $set: { iBlocked: false } }
@@ -303,7 +280,7 @@ const unblockCategory = async (req, res, next) => {
   } catch (err) {
     next(err);
   }
-};        
+};
 
 const blockProduct = async (req, res, next) => {
   const proId = req.params.id;
@@ -335,12 +312,9 @@ const unblockProduct = async (req, res, next) => {
 
 const editProduct = async (req, res, next) => {
   try {
-    console.log(req.query.id);
-
     const productData = await ProductModel.findOne({
       poroductid: req.params.id,
     });
-    console.log(productData);
     res.render("../views/admin/editProduct", {
       productData,
       productid: req.query.id,
@@ -350,10 +324,7 @@ const editProduct = async (req, res, next) => {
   }
 };
 
-
-
-
-const productImageEdit = async (req, res,next) => {
+const productImageEdit = async (req, res, next) => {
   try {
     const public_id = req.params.public_id;
     const product_id = req.params.product_id;
@@ -386,7 +357,6 @@ const productImageEdit = async (req, res,next) => {
   }
 };
 
-
 const editProducts = async (req, res, next) => {
   const product_id = req.params.id;
 
@@ -410,13 +380,9 @@ const editProducts = async (req, res, next) => {
   }
 };
 
-
-
-
 const getCouponPage = async (req, res, next) => {
   const couponData = await couponModel.find();
   try {
-    console.log(couponData);
     res.render("../views/admin/coupon", { couponData });
   } catch (error) {
     next(error);
@@ -448,9 +414,7 @@ const addCoupn = async (req, res, next) => {
 //cupon edit page
 const getCouponEditPage = async (req, res) => {
   try {
-    console.log(req.query.id);
     const couponData = await couponModel.find({ _id: req.query.id });
-    console.log(couponData);
 
     res.render("../views/admin/editcoupon.ejs", { couponData });
   } catch (error) {
@@ -460,8 +424,6 @@ const getCouponEditPage = async (req, res) => {
 
 const postEditCoupon = async (req, res) => {
   try {
-    console.log(req.query.id);
-
     const userData = await couponModel.findByIdAndUpdate(
       { _id: req.query.id },
       {
@@ -519,7 +481,6 @@ const addBanner = async (req, res, next) => {
 const blockBanner = async (req, res, next) => {
   const banID = req.params.id;
   try {
-    console.log("hii");
     await BannerModel.updateOne(
       { _id: banID },
       { $set: { banDeleted: true } }
@@ -533,13 +494,8 @@ const blockBanner = async (req, res, next) => {
 
 const unblockBanner = async (req, res, next) => {
   const banID = req.params.id;
-  console.log(banID + "dddddddddddddddddddddddddddddddddddddddddddddddddd");
-  console.log(
-    req.params.id +
-      "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhuuuuuuuuuuuuuujkkkkkkkkkkkkkkkkkkkkkkkk"
-  );
+
   try {
-    console.log("hii");
     await BannerModel.updateOne(
       { _id: banID },
       { $set: { banDeleted: false } }
@@ -553,7 +509,6 @@ const unblockBanner = async (req, res, next) => {
 
 const getCouponDeletPage = async (req, res) => {
   try {
-    console.log(req.query.id);
     const couponData = await couponModel.findByIdAndDelete({
       _id: req.query.id,
     });
@@ -589,7 +544,6 @@ const getAddStaff = async (req, res) => {
 
 const removeStaffs = async (req, res) => {
   try {
-    console.log(req.query.id);
     const staff = await AdminModel.findByIdAndDelete({ _id: req.query.id });
     res.redirect("/admin/stafftable");
   } catch (error) {
@@ -599,18 +553,14 @@ const removeStaffs = async (req, res) => {
 
 const postAddStaff = async (req, res, next) => {
   try {
-    console.log(req.body);
-
     req.session.email = req.body.email;
-    //  console.log(email);
-    console.log(req.body);
+
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const newStaff = await AdminModel({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
     });
-    console.log(newStaff);
     await newStaff.save().then(() => {
       res.redirect("/admin/stafftable");
     });
@@ -619,283 +569,227 @@ const postAddStaff = async (req, res, next) => {
   }
 };
 
-//old get order
-// const getorderManagement=async(req,res)=>
-// {
-// try {
-
-//   const orderList = await orderModel.aggregate([
-//      {
-//         $unwind: "$orderItems",
-//      },
-//     {
-//     $lookup: {
-//          from: "products",
-//            localField: "orderItems.productId",
-//           foreignField: "_id",
-//           as: "product",
-//         },
-//       },
-//      {
-//         $unwind: "$product",
-//       },
-//    ]);
- 
-
-//   res.render("../views/admin/adminOrderManagement", {
-//   orderList,
-//   });
-// } catch (error) {
-//   next(error);
-// }
-// };
-
-const getorderManagement=async(req,res,next)=>
-{
-try {
-
-  const orderList = await orderModel.aggregate([
-    {
-    $lookup: {
-         from: "products",
-           localField: "orderItems.productId",
-          foreignField: "_id",
-          as: "product",
-        },
-      },
-    
-   ]).sort({createdAt: -1});
-   console.log("orderList start")
-
-console.log(orderList)
-console.log("orderList end")
-
-  res.render("../views/admin/adminOrderManagement", {
-  orderList,
-  });
-} catch (error) {
-  next(error);
-}
-};
-
-
-//old statuschange
-// const orderStatusChanging = async (req, res, next) => {
-//   try {
-//       const id = req.params.id;
-//       const productId = req.params.productId;
-//       const data = req.body;
-      
-//      console.log(req.params.productId); 
-     
-
-    
-//       await orderModel.updateOne(
-          
-
-//           { _id: id, "orderItems.productId": productId },
-//           {
-//             $set: {
-//               "orderItems.$.orderStatus": data.orderStatus
-//             }             //     orderStatus: data.orderStatus,
-//               //     paymentMethod: data.paymentStatus,
-              
-//           }
-//       )
-//       res.redirect("/admin/order-management");
-//   } catch (err) {
-//       // next(err)
-//       console.log(err);
-//   }
-// };
-
-
-const orderStatusChanging = async (req, res, next) => {
+const getorderManagement = async (req, res, next) => {
   try {
-      const id = req.params.id;
-      const data = req.body;
-      
-      await orderModel.updateOne(
-          
+    const orderList = await orderModel
+      .aggregate([
+        {
+          $lookup: {
+            from: "products",
+            localField: "orderItems.productId",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+      ])
+      .sort({ createdAt: -1 });
 
-          { _id: id },
-          {
-            $set: {
-              orderStatus: data.orderStatus,
-                        paymentStatus: data.paymentStatus,
-            }   
-          }
-      )
-      res.redirect("/admin/order-management");
-  } catch (err) {
-      // next(err)
-      console.log(err);
+    res.render("../views/admin/adminOrderManagement", {
+      orderList,
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
+const orderStatusChanging = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const data = req.body;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    await orderModel.updateOne(
+      { _id: id },
+      {
+        $set: {
+          orderStatus: data.orderStatus,
+          paymentStatus: data.paymentStatus,
+        },
+      }
+    );
+    res.redirect("/admin/order-management");
+  } catch (err) {
+    // next(err)
+    console.log(err);
+  }
+};
 
 const dashBoardDataGet = async (req, res) => {
-  //month wise data
-  const FIRST_MONTH = 1
-  const LAST_MONTH = 12
-  const TODAY = new Date()
-  const YEAR_BEFORE = new Date(TODAY)
-  YEAR_BEFORE.setFullYear(YEAR_BEFORE.getFullYear() - 1)
-  console.log(TODAY, YEAR_BEFORE)
-  const MONTHS_ARRAY = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-  const pipeLine = [{
-    $match: {
-      createdAt: { $gte: YEAR_BEFORE, $lte: TODAY }
-    }
-  },
-  {
-    $group: {
-      _id: { year_month: { $substrCP: ["$createdAt", 0, 7] } },
-      count: { $sum: 1 }
-    }
-  },
-  {
-    $sort: { "_id.year_month": 1 }
-  },
-  {
-    $project: {
-      _id: 0,
-      count: 1,
-      month_year: {
-        $concat: [
-          { $arrayElemAt: [MONTHS_ARRAY, { $subtract: [{ $toInt: { $substrCP: ["$_id.year_month", 5, 2] } }, 1] }] },
-          "-",
-          { $substrCP: ["$_id.year_month", 0, 4] }
-        ]
-      }
-    }
-  },
-  {
-    $group: {
-      _id: null,
-      data: { $push: { k: "$month_year", v: "$count" } }
-    }
-  },
-  {
-    $addFields: {
-      start_year: { $substrCP: [YEAR_BEFORE, 0, 4] },
-      end_year: { $substrCP: [TODAY, 0, 4] },
-      months1: { $range: [{ $toInt: { $substrCP: [YEAR_BEFORE, 5, 2] } }, { $add: [LAST_MONTH, 1] }] },
-      months2: { $range: [FIRST_MONTH, { $add: [{ $toInt: { $substrCP: [TODAY, 5, 2] } }, 1] }] }
-    }
-  },
-  {
-    $addFields: {
-      template_data: {
-        $concatArrays: [
-          {
-            $map: {
-              input: "$months1",
-              as: "m1",
-              in: {
-                count: 0,
-                month_year: {
-                  $concat: [
-                    { $arrayElemAt: [MONTHS_ARRAY, { $subtract: ["$$m1", 1] }] },
-                    "-",
-                    "$start_year"
-                  ]
-                }
-              }
-            }
-          },
-          {
-            $map: {
-              input: "$months2",
-              as: "m2",
-              in: {
-                count: 0,
-                month_year: {
-                  $concat: [
-                    { $arrayElemAt: [MONTHS_ARRAY, { $subtract: ["$$m2", 1] }] },
-                    "-",
-                    "$end_year"
-                  ]
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  },
-  {
-    $addFields: {
-      data: {
-        $map: {
-          input: "$template_data",
-          as: "t",
-          in: {
-            k: "$$t.month_year",
-            v: {
-              $reduce: {
-                input: "$data",
-                initialValue: 0,
+  const FIRST_MONTH = 1;
+  const LAST_MONTH = 12;
+  const TODAY = new Date();
+  const YEAR_BEFORE = new Date(TODAY);
+  YEAR_BEFORE.setFullYear(YEAR_BEFORE.getFullYear() - 1);
+  const MONTHS_ARRAY = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  const pipeLine = [
+    {
+      $match: {
+        createdAt: { $gte: YEAR_BEFORE, $lte: TODAY },
+      },
+    },
+    {
+      $group: {
+        _id: { year_month: { $substrCP: ["$createdAt", 0, 7] } },
+        count: { $sum: 1 },
+      },
+    },
+    {
+      $sort: { "_id.year_month": 1 },
+    },
+    {
+      $project: {
+        _id: 0,
+        count: 1,
+        month_year: {
+          $concat: [
+            {
+              $arrayElemAt: [
+                MONTHS_ARRAY,
+                {
+                  $subtract: [
+                    { $toInt: { $substrCP: ["$_id.year_month", 5, 2] } },
+                    1,
+                  ],
+                },
+              ],
+            },
+            "-",
+            { $substrCP: ["$_id.year_month", 0, 4] },
+          ],
+        },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        data: { $push: { k: "$month_year", v: "$count" } },
+      },
+    },
+    {
+      $addFields: {
+        start_year: { $substrCP: [YEAR_BEFORE, 0, 4] },
+        end_year: { $substrCP: [TODAY, 0, 4] },
+        months1: {
+          $range: [
+            { $toInt: { $substrCP: [YEAR_BEFORE, 5, 2] } },
+            { $add: [LAST_MONTH, 1] },
+          ],
+        },
+        months2: {
+          $range: [
+            FIRST_MONTH,
+            { $add: [{ $toInt: { $substrCP: [TODAY, 5, 2] } }, 1] },
+          ],
+        },
+      },
+    },
+    {
+      $addFields: {
+        template_data: {
+          $concatArrays: [
+            {
+              $map: {
+                input: "$months1",
+                as: "m1",
                 in: {
-                  $cond: [
-                    { $eq: ["$$t.month_year", "$$this.k"] },
-                    { $add: ["$$this.v", "$$value"] },
-                    { $add: [0, "$$value"] }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  {
-    $project: {
-      data: { $arrayToObject: "$data" },
-      _id: 0
-    }
-  }]
-  const userChart = await UserModel.aggregate(pipeLine)
-  const product = await ProductModel.aggregate(pipeLine)
-  const orderChart = await orderModel.aggregate(pipeLine)
+                  count: 0,
+                  month_year: {
+                    $concat: [
+                      {
+                        $arrayElemAt: [
+                          MONTHS_ARRAY,
+                          { $subtract: ["$$m1", 1] },
+                        ],
+                      },
+                      "-",
+                      "$start_year",
+                    ],
+                  },
+                },
+              },
+            },
+            {
+              $map: {
+                input: "$months2",
+                as: "m2",
+                in: {
+                  count: 0,
+                  month_year: {
+                    $concat: [
+                      {
+                        $arrayElemAt: [
+                          MONTHS_ARRAY,
+                          { $subtract: ["$$m2", 1] },
+                        ],
+                      },
+                      "-",
+                      "$end_year",
+                    ],
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    },
+    {
+      $addFields: {
+        data: {
+          $map: {
+            input: "$template_data",
+            as: "t",
+            in: {
+              k: "$$t.month_year",
+              v: {
+                $reduce: {
+                  input: "$data",
+                  initialValue: 0,
+                  in: {
+                    $cond: [
+                      { $eq: ["$$t.month_year", "$$this.k"] },
+                      { $add: ["$$this.v", "$$value"] },
+                      { $add: [0, "$$value"] },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        data: { $arrayToObject: "$data" },
+        _id: 0,
+      },
+    },
+  ];
+  const userChart = await UserModel.aggregate(pipeLine);
+  const product = await ProductModel.aggregate(pipeLine);
+  const orderChart = await orderModel.aggregate(pipeLine);
 
   res.json({
     userChart,
     product,
-    orderChart
-  })
+    orderChart,
+  });
+};
 
-}
-
-const dashBoardOrderStatus=async(req,res,next)=>{
+const dashBoardOrderStatus = async (req, res, next) => {
   try {
     const orderCounts = await orderModel.aggregate([
       {
@@ -905,28 +799,25 @@ const dashBoardOrderStatus=async(req,res,next)=>{
         },
       },
     ]);
-    
+
     const counts = {};
     orderCounts.forEach(({ _id, count }) => {
       counts[_id] = count;
     });
     res.json({
-      delivered: counts['delivered'] || 0, 
-      pending: counts['pending'] || 0,
-      outdelivery: counts['out for Delivery'] || 0,
-      ship: counts['shipped'] || 0,
+      delivered: counts["delivered"] || 0,
+      pending: counts["pending"] || 0,
+      outdelivery: counts["out for Delivery"] || 0,
+      ship: counts["shipped"] || 0,
     });
-  
   } catch (error) {
-  next(error)}
+    next(error);
   }
-  
-
+};
 
 module.exports = {
   loginPage,
   adminhomepageload,
-  // homePage,
   usersPage,
   productsPage,
   addProductPage,
@@ -964,5 +855,6 @@ module.exports = {
   uploadMiddleware,
   uploadSingleImage,
   productImageEdit,
-  dashBoardOrderStatus
+  dashBoardOrderStatus,
+  // homePage,
 };

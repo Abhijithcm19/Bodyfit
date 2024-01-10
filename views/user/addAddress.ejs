@@ -8,11 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bodyfit | Template</title>
-
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
-    rel="stylesheet">
-
+        rel="stylesheet">
     <!-- Css Styles -->
     <link rel="stylesheet" href="/public/bodyfitHome/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/public/bodyfitHome/css/font-awesome.min.css" type="text/css">
@@ -30,115 +28,99 @@
         <div class="loader"></div>
     </div>
 
-
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__logo">
-                        <a href="/"><img src="/public/bodyfitHome/img/logo.png" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-md-6">
-                    <nav class="header__menu mobile-menu">
-                        <ul>
-                            <li class="active"><a href="/">Home</a></li>
-                            <li><a href="/shop">Shop</a></li>
-                            <li><a href="#">my account</a>
-                                <ul class="dropdown">
-                                    <li><a href="/viewProfile">profile</a></li>
-                                    <li><a href="/order-list">Order Details</a></li>
-                                    <li><a href="/signup">Signup</a></li>
-                                    <li><a href="/login">Login</a></li>
-                                    <li><a href="/logout">Logout</a></li>
-                                </ul>
-                            </li>
-                           
-                            <!-- <li><a href="/login">Login</a></li>
-                            <li><a href="/logout">Logout</a></li> -->
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3 col-md-3">
-                    <div class="header__nav__option">
-                        <a href="#" class="search-switch"><img src="/public/bodyfitHome/img/icon/search.png" alt=""></a>
-                        <a href="wishlist"><img src="/public/bodyfitHome/img/icon/heart.png" alt=""></a>
-                        <a href="/cart"><img src="/public/bodyfitHome/img/icon/cart.png" alt=""> <span>0</span></a>
-                        <div class="price">$0.00</div>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3">
+                <div class="header__logo">
+                    <a href="/"><img src="/public/bodyfitHome/img/logo.png" alt=""></a>
                 </div>
             </div>
-            <div class="canvas__open"><i class="fa fa-bars"></i></div>
+            <div class="col-lg-6 col-md-6">
+                <nav class="header__menu mobile-menu">
+                    <ul>
+                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="/shop">Shop</a></li>
+                        <li><a href="#">my account</a>
+                            <ul class="dropdown">
+                                <li><a href="/viewProfile">profile</a></li>
+                                <li><a href="/order-list">Order Details</a></li>
+                                <li><a href="/signup">Signup</a></li>
+                                <li><a href="/login">Login</a></li>
+                                <li><a href="/logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-3">
+                <div class="header__nav__option">
+                    <a href="#" class="search-switch"><img src="/public/bodyfitHome/img/icon/search.png" alt=""></a>
+                    <a href="wishlist"><img src="/public/bodyfitHome/img/icon/heart.png" alt=""></a>
+                    <a href="/cart"><img src="/public/bodyfitHome/img/icon/cart.png" alt=""> <span>0</span></a>
+                    <div class="price">$0.00</div>
+                </div>
+            </div>
         </div>
+        <div class="canvas__open"><i class="fa fa-bars"></i></div>
+    </div>
     </header>
     <!-- Header Section End -->
-
-
-
     <style>
         .card {
-           margin: 25px;
-           
-       }
-         </style>
-       
-       <div class="col-lg-8 grid-margin stretch-card" >
-         <div class="card" >
-           <div class="card-body" >
-             <h4 class="card-title">Address</h4>
-             <p class="card-description">
-               Add Address
-             </p>
-       <form action="/admin/addAddress" method="POST"class="forms-sample">
-         <div class="form-group">
-           <label for="exampleInputName1">Name</label>
-           <input type="text"  name="Name" id=""class="form-control" id="exampleInputName1" name="productname" placeholder="Type here" required>
-         </div>
-         <div class="form-group">
-           <label for="exampleInputEmail3">State</label>
-           <input type="text" name="State" class="form-control" id="exampleInputEmail3"  required>
-         </div>
-         <div class="form-group">
-           <label for="exampleInputPassword4">District</label>
-           <input type="text" name="district" class="form-control" id="exampleInputPassword4" >
-         </div>
-       
-         <div class="form-group">
-            <label for="exampleInputPassword4">Area</label>
-            <input type="text" name="city" class="form-control" id="exampleInputPassword4" >
-          </div>
-        
-           
-           <div class="form-group">
-             <label for="exampleInputPassword4">Pin code</label>
-             <input type="number" name="Pincode" class="form-control" id="exampleInputPassword4" required>
-           </div>
-           <div class="form-group">
-            <label for="exampleInputPassword4">House Name or company</label>
-            <input type="text" name="city" class="form-control" id="exampleInputPassword4" >
-          </div>
-         <button type="submit" class="btn btn-primary me-2">Submit</button>
-         <button class="btn btn-light">Cancel</button>
-       </form>
-       </div>
-       </div>
-       </div>
-       
-       
-       
+            margin: 25px;
+        }
+    </style>
+    <div class="col-lg-8 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Address</h4>
+                <p class="card-description">
+                    Add Address
+                </p>
+                <form action="/admin/addAddress" method="POST" class="forms-sample">
+                    <div class="form-group">
+                        <label for="exampleInputName1">Name</label>
+                        <input type="text" name="Name" id="" class="form-control" id="exampleInputName1"
+                            name="productname" placeholder="Type here" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail3">State</label>
+                        <input type="text" name="State" class="form-control" id="exampleInputEmail3" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">District</label>
+                        <input type="text" name="district" class="form-control" id="exampleInputPassword4">
+                    </div>
 
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">Area</label>
+                        <input type="text" name="city" class="form-control" id="exampleInputPassword4">
+                    </div>
 
-
-
-
-
-     <!-- Footer Section Begin -->
-     <footer class="footer">
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">Pin code</label>
+                        <input type="number" name="Pincode" class="form-control" id="exampleInputPassword4" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword4">House Name or company</label>
+                        <input type="text" name="city" class="form-control" id="exampleInputPassword4">
+                    </div>
+                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Section Begin -->
+    <footer class="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><h3 style="color: white;">BODYFIT</h3></a>
+                            <a href="#">
+                                <h3 style="color: white;">BODYFIT</h3>
+                            </a>
                         </div>
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
                         <a href="#"><img src="/public/bodyfitHome/img/payment.png" alt=""></a>
@@ -157,7 +139,7 @@
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>HELP                        </h6>
+                        <h6>HELP </h6>
                         <ul>
                             <li><a href="#">Contact Us</a></li>
                             <li><a href="#">Payment Methods</a></li>
@@ -168,29 +150,25 @@
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6">
                     <div class="footer__widget">
-                        <h6>Contact Us                      </h6>
+                        <h6>Contact Us </h6>
                         <ul>
-                            <li><a href="#">	HiLight business Park , calicut ,kerala</a></li>
-                            <li><a href="#">	6238424753</a></li>
-                            <li><a href="#">	shoehub2023@gmail.com</a></li>
-                           
+                            <li><a href="#"> HiLight business Park , calicut ,kerala</a></li>
+                            <li><a href="#"> 6238424753</a></li>
+                            <li><a href="#"> shoehub2023@gmail.com</a></li>
                         </ul>
                     </div>
                 </div>
-             
             </div>
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <div class="footer__copyright__text">
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                         <p>Copyright ©
                             <script>
                                 document.write(new Date().getFullYear());
                             </script>2020
                             All rights reserved | This template is made with <i class="fa fa-heart-o"
-                            aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Abhijith</a>
+                                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Abhijith</a>
                         </p>
-                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                     </div>
                 </div>
             </div>

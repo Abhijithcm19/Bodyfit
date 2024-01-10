@@ -9,17 +9,16 @@ const ProductModel = require("../models/productModel");
 const CategoryModel = require("../models/categoryModel");
 const orderModel = require("../models/oderModel");
 const carts = require("../models/cart");
-const Razorpay=require("razorpay")
+const Razorpay = require("razorpay");
 const DataUri = new require("datauri/parser");
 const dUri = new DataUri();
-const multer = require('multer');
+const multer = require("multer");
 const path = require("path");
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 const Wishlist = require("../models/wishlist");
 const couponModel = require("../models/couponModel");
-const BannerModel =require("../models/banner")
+const BannerModel = require("../models/banner");
 const Category = CategoryModel.category;
-
 
 userErr = "";
 passErr = "";
@@ -29,12 +28,16 @@ const signupPage = async (req, res, next) => {
     let error = req.session.error;
     let succ = req.session.succ;
     req.session.error = null;
-    req.session.succ = null ;
+    req.session.succ = null;
     const session = req.session.user;
     if (session) {
       res.redirect("/");
     } else {
-      res.render("../views/user/userSignup", {error,succ ,login: req.session});
+      res.render("../views/user/userSignup", {
+        error,
+        succ,
+        login: req.session,
+      });
     }
   } catch (error) {
     next(error);
@@ -53,12 +56,8 @@ const verifyPage = async (req, res, next) => {
 };
 
 const loginPage = async (req, res, next) => {
-
   try {
- 
     if (!req.session.userLogin) {
-    
-
       res.render("../views/user/userLogin", {
         title: "Login",
         login: req.session,
@@ -75,123 +74,110 @@ const loginPage = async (req, res, next) => {
   }
 };
 
-
 const home = async (req, res, next) => {
   try {
-
-    let bannerData = await BannerModel.find({ banDeleted:false})
+    let bannerData = await BannerModel.find({ banDeleted: false });
     const newproduct = await ProductModel.find({}).limit(4);
-    res.render("../views/user/userHome", {title: "Home", login: req.session.userLogin, newproduct,bannerData });
-    
+    res.render("../views/user/userHome", {
+      title: "Home",
+      login: req.session.userLogin,
+      newproduct,
+      bannerData,
+    });
   } catch (error) {
     next(error);
     console.log(error.message);
   }
 };
 
-
 const getforgotpassmail = (req, res) => {
-  email = req.query
-  res.render('../views/user/forgotemail', { email })
+  email = req.query;
+  res.render("../views/user/forgotemail", { email });
 };
 
-const getOnlyOtp = (req, res) => 
-{
+const getOnlyOtp = (req, res) => {
   const otpError = req.session.otpError;
-  req.session.otpError=null;
-  email = req.query
-  res.render('../views/user/forgotpassotp', { email })
+  req.session.otpError = null;
+  email = req.query;
+  res.render("../views/user/forgotpassotp", { email });
 };
-
 
 const getSetPassword = (req, res, next) => {
   try {
-    res.render("../views/user/forgotPassword")
+    res.render("../views/user/forgotPassword");
   } catch (err) {
-    next(err)
+    next(err);
   }
 };
 
-
-
 const emailPost = async (req, res, next) => {
-
   let email = req.body.email;
   const userEmail = req.body.email;
-  req.session.forgotpasswordmail=userEmail;
-  
+  req.session.forgotpasswordmail = userEmail;
+
   const userData = req.body;
   const isUserExist = await UserModel.findOne({ email: userEmail });
 
   if (isUserExist) {
     otp = Math.floor(100000 + Math.random() * 900000);
-    await sendOtp.sendVerifyEmail(email, otp)
+    await sendOtp
+      .sendVerifyEmail(email, otp)
       .then(() => {
-        res.redirect('/onlyotp');
-      }).catch((error) => {
-        next(error)
+        res.redirect("/onlyotp");
       })
+      .catch((error) => {
+        next(error);
+      });
   } else {
-    res.render('../views/user/forgotemail', { invalid: "please enter a valid Email", userData })
+    res.render("../views/user/forgotemail", {
+      invalid: "please enter a valid Email",
+      userData,
+    });
   }
-
-}
-
+};
 
 const forgotpasswordverifyotp = async (req, res, next) => {
   try {
     if (req.body.otp == otp) {
-      await UserModel.findOneAndUpdate({ email: req.session.email }, { $set: { verified: true } })
+      await UserModel.findOneAndUpdate(
+        { email: req.session.email },
+        { $set: { verified: true } }
+      )
         .then(() => {
           otp = "";
-          res.redirect('/setpassword')
+          res.redirect("/setpassword");
         })
         .catch((error) => {
-          next(error)
-        })
-
+          next(error);
+        });
     } else {
       req.session.otpError = "Invalid OTP. Please try again.";
-      return res.redirect('/onlyotp')
+      return res.redirect("/onlyotp");
     }
-  } catch (error) {
-    next(error)
-  }
-}
-
-
-const 
-postSetPassword = async (req, res, next) => {
-
-  try {
-
-    const email = req.session.forgotpasswordmail
-
-   req.session.forgotpasswordmail=null
-    const password = req.body.new
-   
-    console.log(email);
-
-    const hash = await bcrypt.hash(password, 10)
-
-
-    await UserModel.findOneAndUpdate(
-      { email: email },
-      { $set: { password: hash } })
-      
-      console.log("Enter Renter Page");
-    res.render('../views/user/userLogin')
-
   } catch (error) {
     next(error);
   }
-
 };
 
+const postSetPassword = async (req, res, next) => {
+  try {
+    const email = req.session.forgotpasswordmail;
 
+    req.session.forgotpasswordmail = null;
+    const password = req.body.new;
 
+    const hash = await bcrypt.hash(password, 10);
 
+    await UserModel.findOneAndUpdate(
+      { email: email },
+      { $set: { password: hash } }
+    );
 
+    res.render("../views/user/userLogin");
+  } catch (error) {
+    next(error);
+  }
+};
 
 const doLogout = async (req, res, next) => {
   try {
@@ -202,7 +188,6 @@ const doLogout = async (req, res, next) => {
     next(error);
   }
 };
-
 
 const doLogin = async (req, res, next) => {
   try {
@@ -236,7 +221,6 @@ const doLogin = async (req, res, next) => {
 };
 
 const verifyUser = async (req, res, next) => {
-  console.log(req.body.otp);
   try {
     if (req.body.otp == otp) {
       await UserModel.findOneAndUpdate(
@@ -251,7 +235,6 @@ const verifyUser = async (req, res, next) => {
           next(error);
         });
     } else {
-      console.log("otp doesnt match");
       return res.redirect("/verify-user");
     }
   } catch (error) {
@@ -263,11 +246,9 @@ const doSignup = async (req, res, next) => {
   try {
     const existingUser = await UserModel.findOne({ email: req.body.email });
     if (existingUser) {
-      // If a user with the provided email already exists, redirect to the signup page with an error message
       req.session.error = "Email Already Exists";
       res.redirect("/signup");
     } else {
-      // If the email is not already in use, create a new user object and save it to the database
       const newUser = new UserModel({
         name: req.body.name,
         email: req.body.email,
@@ -275,30 +256,28 @@ const doSignup = async (req, res, next) => {
         password: await bcrypt.hash(req.body.password, 10),
       });
 
-     
       await newUser
-      .save()
-      .then(() => {
-        next();
-      })
-      .catch((error) => {
-        console.log(error);
-        res.redirect("/register");
-      });
-      
+        .save()
+        .then(() => {
+          next();
+        })
+        .catch((error) => {
+          console.log(error);
+          res.redirect("/register");
+        });
     }
   } catch (error) {
-    // If there is an error, log it and return an error message to the user
     console.error(error);
-    res.status(500).send("An error occurred while registering your account. Please try again later.");
+    res
+      .status(500)
+      .send(
+        "An error occurred while registering your account. Please try again later."
+      );
   }
 };
 
 const getOtp = async (req, res, next) => {
-  // console.log(req.body);
   let email = req.body.email;
-
-  console.log(email);
 
   otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -312,12 +291,8 @@ const getOtp = async (req, res, next) => {
     });
 };
 
-
 const forgotresendotp = async (req, res, next) => {
-  // console.log(req.body);
   let email = req.body.email;
-
-  console.log(email);
 
   otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -332,10 +307,7 @@ const forgotresendotp = async (req, res, next) => {
 };
 
 const resendotp = async (req, res, next) => {
-  // console.log(req.body);
   let email = req.body.email;
-
-  console.log(email);
 
   otp = Math.floor(100000 + Math.random() * 900000);
 
@@ -349,57 +321,45 @@ const resendotp = async (req, res, next) => {
     });
 };
 
-
 // resend otp
 
 const resendotppage = async (req, res) => {
   const userId = req.params.user_id;
   const user = await User.findOne({ _id: req.params.user_id });
- const email=user.email
+  const email = user.email;
 
   try {
-
     let otp;
-            otp = Math.floor(Math.random() * 1000000);
-            console.log(otp);
+    otp = Math.floor(Math.random() * 1000000);
 
-            const emailStatus = await sendOtpViaEmail(email, otp, res);
-            if (emailStatus) {
-              User.findByIdAndUpdate(
-                { _id: user._id },
-                {
-                  $set: {
-                    "otp.expiredAt": new Date(Date.now() + 20 * 60 * 1000),
-                    "otp.otp": otp,
-                  },
-                }
-              ).then(() => {
-                res.redirect("/verifyotp/" + user._id);
-              });
-            }
-      
-        else {
-          throw new Error("Password is required");
+    const emailStatus = await sendOtpViaEmail(email, otp, res);
+    if (emailStatus) {
+      User.findByIdAndUpdate(
+        { _id: user._id },
+        {
+          $set: {
+            "otp.expiredAt": new Date(Date.now() + 20 * 60 * 1000),
+            "otp.otp": otp,
+          },
         }
-      
- 
+      ).then(() => {
+        res.redirect("/verifyotp/" + user._id);
+      });
+    } else {
+      throw new Error("Password is required");
+    }
   } catch (err) {
     console.log("err");
   }
-}
-
-
-
+};
 
 // userProfile
 
 const viewProfile = async (req, res, next) => {
   try {
     const email = req.session.userEmail;
-    console.log(req.session, "hii");
     let userid = await UserModel.findOne({ email: email });
     const userData = await UserModel.findOne({ _id: userid._id });
-    console.log(userData, "userData");
     res.render("../views/user/profile", {
       login: req.session,
       userData: userData,
@@ -411,9 +371,6 @@ const viewProfile = async (req, res, next) => {
 
 const postusereditProfilePage = async (req, res) => {
   try {
-    console.log(req.body.name);
-    console.log(req.params.Dataid);
-
     await UserModel.findByIdAndUpdate(
       { _id: req.params.Dataid },
       {
@@ -434,10 +391,6 @@ const postusereditProfilePage = async (req, res) => {
 const getchangepasswordPage = async (req, res) => {
   res.redirect("/viewProfile");
 };
-
-// edit user password
-
-// console.log(user);
 
 const postChangePasswordPage = async (req, res) => {
   let email = req.session.userEmail;
@@ -478,15 +431,10 @@ const postChangePasswordPage = async (req, res) => {
   }
 };
 
-// let password=userdatas.password
-// console.log(password);
-
 const getusereditProfilePage = async (req, res) => {
-  // if (req.session.email) {
   try {
     const id = req.query.id;
     const userData = await UserModel.findById({ _id: id });
-    // console.log(req.session.error);
     if (userData) {
       let error = req.session.error;
       req.session.error = null;
@@ -495,10 +443,6 @@ const getusereditProfilePage = async (req, res) => {
         Dataid: req.query.id,
       });
     }
-
-    // else {
-    //   res.redirect("/admin");
-    // }
   } catch (error) {
     console.log(error.message);
   }
@@ -508,7 +452,6 @@ const getProfileAddressPage = async (req, res) => {
   try {
     let email = req.session.userEmail;
     const userData = await UserModel.findOne({ email: email });
- 
 
     res.render("../views/user/useraddressprint.ejs", {
       login: req.session,
@@ -520,10 +463,8 @@ const getProfileAddressPage = async (req, res) => {
 };
 
 const postAddressPage = async (req, res) => {
-
   try {
     let email = req.session.userEmail;
-    console.log(email);
 
     await UserModel.updateOne(
       { email: email },
@@ -540,7 +481,6 @@ const postAddressPage = async (req, res) => {
             houseaddress: req.body.address,
             postal_code: req.body.zip,
           },
-          
         },
       }
     );
@@ -552,79 +492,75 @@ const postAddressPage = async (req, res) => {
 };
 
 const fetchAddress = async (req, res) => {
-  console.log("fetch entering......................");
-  const addressId=req.params.userid
+  const addressId = req.params.userid;
   try {
     const addressId = req.params.userid;
     const email = req.session.userEmail;
     const userData = await UserModel.findOne({ email });
     const addressDetails = userData.addressDetails.id(addressId);
     if (!addressDetails) {
-      return res.status(404).json({ message: 'Address not found' });
+      return res.status(404).json({ message: "Address not found" });
     }
     res.json(addressDetails);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: 'Internal server error' });
-  } 
-}
-
-
-
-
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 const getallproductpage = async (req, res) => {
   try {
     const perPage = 6;
     const page = parseInt(req.query.page) || 1;
-    const sortOption = req.query.sort || 'created_at';
-    const categoryData = await CategoryModel.find({ iBlocked: true }, { name: 1 });
+    const sortOption = req.query.sort || "created_at";
+    const categoryData = await CategoryModel.find(
+      { iBlocked: true },
+      { name: 1 }
+    );
     const filter = {};
     const category = req.query.category;
-    
-    const searchKeyword = req.query.search || '';
-    
+
+    const searchKeyword = req.query.search || "";
+
     if (category) {
       filter.category = category;
     }
     if (searchKeyword) {
-      filter.productname = { $regex: new RegExp(searchKeyword, 'i') };
-      
+      filter.productname = { $regex: new RegExp(searchKeyword, "i") };
     }
- 
+
     let sort = {};
     switch (sortOption) {
-      case 'low-to-high':
+      case "low-to-high":
         sort = { price: 1 };
         break;
-      case 'high-to-low':
+      case "high-to-low":
         sort = { price: -1 };
         break;
-      case 'name-ascending':
+      case "name-ascending":
         sort = { productname: 1 };
         break;
-      case 'name-descending':
+      case "name-descending":
         sort = { productname: -1 };
         break;
-       
+
       default:
         sort = { created_at: -1 };
         break;
-    
     }
 
     const countQuery = category ? { ...filter, category } : filter;
     const totalCount = await ProductModel.countDocuments(countQuery);
     const totalPages = Math.ceil(totalCount / perPage);
-    const nextPage = (page < totalPages) ? page + 1 : null;
-    const prevPage = (page > 1) ? page - 1 : null;
+    const nextPage = page < totalPages ? page + 1 : null;
+    const prevPage = page > 1 ? page - 1 : null;
 
     const products = await ProductModel.find(filter)
       .sort(sort)
-      .skip((perPage * (page - 1)))
+      .skip(perPage * (page - 1))
       .limit(perPage);
 
-    res.render('../views/user/shop.ejs', {
+    res.render("../views/user/shop.ejs", {
       alldetails: products,
       catData: categoryData,
       totalCount,
@@ -634,17 +570,14 @@ const getallproductpage = async (req, res) => {
       prevPage,
       searchKeyword,
       sortby: sortOption,
-      selectedCategory: category
+      selectedCategory: category,
     });
   } catch (error) {
     console.log(error.message);
   }
 };
 
-
-
-
-const getCheckoutPage = async (req, res,next) => {
+const getCheckoutPage = async (req, res, next) => {
   try {
     const couponData = req.session.couponData;
     const totalAmount = req.session.totalAmount;
@@ -678,17 +611,14 @@ const getCheckoutPage = async (req, res,next) => {
       userData: user,
       userId: userId,
       couponData: couponData,
-       totalAmount: totalAmount
+      totalAmount: totalAmount,
     });
   } catch (error) {
     next(error);
   }
 };
 
-
-
-
-const postCheckoutPage = async (req, res,next) => {
+const postCheckoutPage = async (req, res, next) => {
   try {
     const email = req.session.userEmail;
     const user = await UserModel.findOne({ email: email });
@@ -725,35 +655,28 @@ const postCheckoutPage = async (req, res,next) => {
   }
 };
 
+const postOrderpage = async (req, res) => {
+  const amount = req.body.amount;
 
-
-const postOrderpage=async(req,res)=>
-{
- const amount=req.body.amount
- console.log(amount);
-
-const razorpayInstance = new Razorpay({ 
-// key_id:process.env.KEY_ID,
-key_id:"rzp_test_jbSlDDRu4vCwER",
-key_secret:"87NItBHagsU0z1hoL7yvVRQv"
-
-})
-razorpayInstance.orders.create({
-
-amount:amount*100,
-  currency:"INR"
-},(err,order)=>{
-  console.log(order)
-  res.json({success:true,order,amount})
-})
-}
-
+  const razorpayInstance = new Razorpay({
+    // key_id:process.env.KEY_ID,
+    key_id: "rzp_test_jbSlDDRu4vCwER",
+    key_secret: "87NItBHagsU0z1hoL7yvVRQv",
+  });
+  razorpayInstance.orders.create(
+    {
+      amount: amount * 100,
+      currency: "INR",
+    },
+    (err, order) => {
+      res.json({ success: true, order, amount });
+    }
+  );
+};
 
 const paymentConfirm = async (req, res) => {
- 
   const userId = req.body.userId;
 
- 
   try {
     const razorpayInstance = new Razorpay({
       key_id: "rzp_test_jbSlDDRu4vCwER",
@@ -784,8 +707,6 @@ const paymentConfirm = async (req, res) => {
           $unwind: "$product",
         },
       ]);
-  
-      console.log(req.body);
 
       const newOrder = new orderModel({
         orderItems: cartList.map((item) => ({
@@ -834,12 +755,10 @@ const paymentConfirm = async (req, res) => {
   }
 };
 
-
-
 const postCashonDelivery = async (req, res) => {
   try {
     const userId = req.query.userId;
- 
+
     const cartList = await carts.aggregate([
       {
         $match: {
@@ -862,7 +781,7 @@ const postCashonDelivery = async (req, res) => {
       },
     ]);
 
-    let orderId = 'bodyfitC00001';
+    let orderId = "bodyfitC00001";
 
     const newOrder = new orderModel({
       orderItems: cartList.map((item) => ({
@@ -871,7 +790,7 @@ const postCashonDelivery = async (req, res) => {
       })),
       products: req.session.orderedItems,
       totalPrice: req.body.amount,
-      order_id: orderId, // use the generated orderId here
+      order_id: orderId,
       name: req.body.name,
       shop: req.body.shop,
       state: req.body.state,
@@ -885,75 +804,69 @@ const postCashonDelivery = async (req, res) => {
 
     await newOrder.validate();
     await newOrder.save();
-   
+
     req.session.orderedItems = null;
     await carts.deleteMany({ userId: userId });
 
     res.status(200).send({ orderId });
   } catch (error) {
-    if (error.name === 'ValidationError') {
+    if (error.name === "ValidationError") {
       const errors = Object.values(error.errors).map((err) => err.message);
       req.session.error = "Please fill in the form";
 
-      console.log( req.session.error);
-      return res.status(400).send(`<script>alert('${req.session.error}');</script>`);
+      return res
+        .status(400)
+        .send(`<script>alert('${req.session.error}');</script>`);
     } else {
       console.error(error);
-      res.status(500).send('Internal Server Error');
+      res.status(500).send("Internal Server Error");
     }
   }
 };
 
-
-
-
-const codSuccessPage=async(req,res)=>{
+const codSuccessPage = async (req, res) => {
   try {
-    
-    res.render("../views/user/oderSuccess.ejs")
+    res.render("../views/user/oderSuccess.ejs");
   } catch (error) {
     console.log("error");
   }
-}
-
-
+};
 
 const getUserOrderPage = async (req, res, next) => {
   try {
-  
     let email = req.session.userEmail;
     const userData = await UserModel.findOne({ email: email });
-   
-    const userId = userData._id;
-    
 
-    const orderList = await orderModel.aggregate([
-      {
-         $unwind: "$orderItems",
-      },
-     {
-     $lookup: {
-          from: "products",
+    const userId = userData._id;
+
+    const orderList = await orderModel
+      .aggregate([
+        {
+          $unwind: "$orderItems",
+        },
+        {
+          $lookup: {
+            from: "products",
             localField: "orderItems.productId",
-           foreignField: "_id",
-           as: "product",
-         },
-       },
-      {
-         $unwind: "$product",
-       },
-    ]).sort({createdAt: -1});
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        {
+          $unwind: "$product",
+        },
+      ])
+      .sort({ createdAt: -1 });
     res.render("../views/user/userOrder.ejs", {
       login: req.session,
-      userDatas: userData,orderList, 
+      userDatas: userData,
+      orderList,
       Dataid: userId,
     });
   } catch (error) {
     next(error);
   }
 };
-
-
 
 const cancelOrder = async (req, res, next) => {
   try {
@@ -978,15 +891,10 @@ const cancelOrder = async (req, res, next) => {
   }
 };
 
-
-
-
-const couponcheck = async (req, res,next) => {
+const couponcheck = async (req, res, next) => {
   try {
     const couponCode = req.body.couponCode;
     const total_amount = req.body.total_amount;
-    console.log(total_amount);
-
 
     const user = await UserModel.findOne({ email: req.session.userEmail });
     const userId = user._id;
@@ -1009,13 +917,9 @@ const couponcheck = async (req, res,next) => {
   }
 };
 
-
-
 const userAddressEdit = async (req, res) => {
   try {
-    
     const addressId = req.query.addressId;
-    console.log(addressId+"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
     const email = req.session.userEmail;
     const userData = await UserModel.findOne({ email: email });
 
@@ -1032,10 +936,8 @@ const userAddressEdit = async (req, res) => {
   }
 };
 
-
 const updateAddressPage = async (req, res) => {
   const addressid = req.params.id;
- 
 
   try {
     const email = req.session.userEmail;
@@ -1061,24 +963,16 @@ const updateAddressPage = async (req, res) => {
   }
 };
 
-
 const userAddressDelete = async (req, res) => {
   try {
-  const id = req.query.id;
-  await UserModel.updateOne(
-  {},
-  { $pull: { addressDetails: { _id: id } } }
-  );
-  console.log("Address deleted successfully.");
-  res.status(200).redirect("/profile-address");
+    const id = req.query.id;
+    await UserModel.updateOne({}, { $pull: { addressDetails: { _id: id } } });
+    res.status(200).redirect("/profile-address");
   } catch (error) {
-  console.error(error);
-  res.status(500).send("Error deleting address");
+    console.error(error);
+    res.status(500).send("Error deleting address");
   }
-  };
-
-
-
+};
 
 module.exports = {
   home,
@@ -1119,7 +1013,5 @@ module.exports = {
   codSuccessPage,
   getUserOrderPage,
   resendotppage,
-  cancelOrder
-
-
+  cancelOrder,
 };

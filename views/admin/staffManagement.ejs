@@ -1,94 +1,80 @@
 <%- include('../admin/layouts/admin-header.ejs') %>
-
-
-<section>
+  <section>
     <div class="container-fluid py-4">
-        <div class="row">
-          <div class="col-12">
-            <div class="card mb-4">
-              <div class="card-header pb-0">
-                <h6>Staff Management</h6>
-              </div>
-              <div class="card-body px-0 pt-0 pb-2">
-                <div class="table-responsive p-0">
-                  <table class="table align-items-center mb-0">
-                    <thead>
-                      <tr>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Staff Name</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>        
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
-                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"> <a class="btn btn-success btn-sm" href="/admin/stafftable/addstaff"
-                          role="button">Add</a></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-           
-                <% staff.forEach(element=> { %>
-      
-      
-      
-                        <tr class="text-gray-700 dark:text-gray-400">
-                            <td class="px-4 py-3">
-                                <div class="flex items-center text-sm">
-                                    <div>
-                                      <%= index ++%>
-                                    </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Staff Management</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">No</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Staff Name
+                      </th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Email</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Actions</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"> <a
+                          class="btn btn-success btn-sm" href="/admin/stafftable/addstaff" role="button">Add</a></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+                    <% staff.forEach(element=> { %>
+                      <tr class="text-gray-700 dark:text-gray-400">
+                        <td class="px-4 py-3">
+                          <div class="flex items-center text-sm">
+                            <div>
+                              <%= index ++%>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                          <%=element.name %>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                          <%=element.email %>
+                        </td>
+
+                        <td class="px-4 py-3 text-xs">
+                          <!-- Button trigger modal -->
+                          <a class="btn btn-danger btn-sm" href="/admin/staffremove?id=<%= element._id%>"
+                            data-toggle="modal" data-target="#removeModal">
+                            Remove
+                          </a>
+                          <!-- Modal -->
+                          <div class="modal fade" id="removeModal" tabindex="-1" role="dialog"
+                            aria-labelledby="removeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="removeModalLabel">Confirm removal</h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
                                 </div>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                              <%=element.name %>
-                            </td>
-                            <td class="px-4 py-3 text-sm">
-                              <%=element.email %>
-                            </td>
-                            
-                            <td class="px-4 py-3 text-xs">
-                               
-                              
-                              <!-- Button trigger modal -->
-<a class="btn btn-danger btn-sm" href="/admin/staffremove?id=<%= element._id%>" data-toggle="modal" data-target="#removeModal">
-  Remove
-</a>
-
-<!-- Modal -->
-<div class="modal fade" id="removeModal" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="removeModalLabel">Confirm removal</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Are you sure you want to remove this staff member?
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-danger" href="/admin/staffremove?id=<%= element._id%>" role="button">Remove</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-                              
-                                  
-                          </td>
-                   
+                                <div class="modal-body">
+                                  Are you sure you want to remove this staff member?
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                  <a class="btn btn-danger" href="/admin/staffremove?id=<%= element._id%>"
+                                    role="button">Remove</a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
                       </tr>
                       <% }) %>
-                
-                    </tbody>
-                      
-                    
-                  </table>
-                </div>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
-      
-      
+      </div>
   </section>

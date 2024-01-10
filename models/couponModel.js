@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const Schema   = mongoose.Schema;
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 // const moment   = require('moment')
 // const ObjectId = Schema.ObjectId;
 
@@ -7,49 +7,42 @@ const couponSchema = new mongoose.Schema({
   couponName: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   couponCode: {
     type: String,
-    required: true
+    required: true,
   },
   startDate: {
     type: Date,
-    required: true
+    required: true,
   },
   endDate: {
     type: Date,
-    required: true
+    required: true,
   },
   minimumAmount: {
     type: Number,
-    required: true
+    required: true,
   },
   maximumAmount: {
     type: Number,
-    required: true
+    required: true,
   },
   discount: {
     type: Number,
-    required: true
-  },     
-   delete: {
+    required: true,
+  },
+  delete: {
     type: Boolean,
     default: false,
   },
-  // users: [
-  //   {
-  //     userId: {
-  //       type: ObjectId,
-  //     },
-  //   },
-  // ]
 });
 
-const Coupon = mongoose.model('Coupon', couponSchema);
+const Coupon = mongoose.model("Coupon", couponSchema);
 
 module.exports = Coupon;

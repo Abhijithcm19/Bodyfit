@@ -15,7 +15,6 @@ db();
 const adminRouter = require("./routes/admin");
 const usersRouter = require("./routes/user");
 
-
 const multer = require("multer");
 
 const app = express();
@@ -32,29 +31,26 @@ app.use(cookieParser());
 app.use("/public", express.static(path.join(__dirname, "public")));
 
 //session setup
-const oneHour = 1000*60*60;
-app.use(session({
+const oneHour = 1000 * 60 * 60;
+app.use(
+  session({
     secret: "key",
     resave: true,
     saveUninitialized: true,
-    cookie: {maxAge: oneHour}
-}))
-
-
-
+    cookie: { maxAge: oneHour },
+  })
+);
 
 // Cache-Control
-app.use((req,res,next)=>{
-  res.set('Cache-Control','no-store');
+app.use((req, res, next) => {
+  res.set("Cache-Control", "no-store");
   next();
-})
-
+});
 
 app.use("/admin", adminRouter);
 app.use("/", usersRouter);
 
-
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
@@ -68,9 +64,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-
-
-
 
 // module.exports = app;
 app.listen(PORT, () => {
